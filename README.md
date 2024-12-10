@@ -1,6 +1,11 @@
 
 ## 🌐 Socials:
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/garvit-singla-217372321/) [![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/garvits093) 
+
+
+
+
+
 <iframe src="https://garvittsingla.github.io/threejs-earth/" width="800" height="600"></iframe>
 
 # 💻 Tech Stack:
