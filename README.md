@@ -15,6 +15,6 @@ I love blending performance, design, and engineering into projects that *feel al
 ---
 
 Mail me to  : 📬 **[garvitsingla4751@gmail.com](mailto:garvitsingla4751@gmail.com)**  
-Active on X **[@garvitsingla_](https://x.com/garvitsingla_)**
+
 
 > currently crafting web3 and low level
