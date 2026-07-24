@@ -3,15 +3,11 @@ name: Update GitHub Profile Terminal SVG
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 0 * * *' # Runs every night at 12:00 AM UTC (Midnight)
   push:
     branches:
       - main
       - master
-    paths:
-      - 'profile.json'
-      - 'generate.py'
-      - 'assets/ascii.txt'
 
 permissions:
   contents: write

@@ -2,11 +2,12 @@
 """
 generate.py - GitHub Profile Terminal SVG Generator for @garvittsingla
 
-Fetches user configuration from profile.json, ASCII art from assets/ascii.txt,
-and dynamic GitHub account statistics via GitHub API, then renders a high-quality,
-fastfetch/neofetch-styled dark terminal card SVG saved to assets/profile.svg.
+Fetches user configuration from profile.json, ASCII art from assets/ascii.txt
+(or converts assets/image.png automatically if present), and dynamic GitHub API stats,
+rendering a fastfetch/neofetch-styled dark terminal card saved to assets/profile.svg.
 """
 
+import base64
 import html
 import json
 import os
@@ -19,10 +20,17 @@ from typing import Dict, List, Optional, Tuple, Any
 import requests
 from dateutil.relativedelta import relativedelta
 
+# Import image_to_ascii helper if available
+try:
+    from image_to_ascii import convert_image_to_ascii
+except ImportError:
+    convert_image_to_ascii = None
+
 # Paths
 BASE_DIR = Path(__file__).parent
 CONFIG_PATH = BASE_DIR / "profile.json"
 ASCII_PATH = BASE_DIR / "assets" / "ascii.txt"
+IMAGE_PATH = BASE_DIR / "assets" / "image.png"
 OUTPUT_SVG_PATH = BASE_DIR / "assets" / "profile.svg"
 
 # GitHub Username
@@ -97,7 +105,6 @@ class GitHubAPI:
 
     def get_owned_repositories(self) -> List[Dict[str, Any]]:
         repos = self.github_get_paginated(f"users/{self.username}/repos", params={"type": "owner"})
-        # Filter strictly for repos owned by username and non-fork
         owned_public = [
             r for r in repos
             if isinstance(r, dict)
@@ -108,23 +115,16 @@ class GitHubAPI:
         return owned_public
 
     def get_public_commits_estimate(self, owned_repos: List[Dict[str, Any]]) -> str:
-        """
-        Attempts to calculate or estimate public commits/contributions.
-        1. Try search API for author commits if token is available.
-        2. Fall back to summing commit counts across top owned repos.
-        """
-        # Attempt 1: Search API (requires token for commit search in some contexts)
         if self.token:
             search_res = self.github_get("search/commits", params={"q": f"author:{self.username}"})
             if search_res and "total_count" in search_res:
                 return str(search_res["total_count"])
 
-        # Attempt 2: Check commit header per_page=1 on top owned non-fork repos
         total_commits = 0
         counted_repos = 0
         sorted_repos = sorted(owned_repos, key=lambda r: r.get("stargazers_count", 0), reverse=True)
 
-        for repo in sorted_repos[:15]:  # Limit requests to top 15 repos to respect rate limits
+        for repo in sorted_repos[:15]:
             repo_name = repo.get("name")
             if not repo_name:
                 continue
@@ -133,7 +133,6 @@ class GitHubAPI:
                 resp = self.session.get(url, params={"author": self.username, "per_page": 1}, timeout=5)
                 if resp.status_code == 200:
                     counted_repos += 1
-                    # Read 'Link' header for total pages count if present
                     if "Link" in resp.headers and 'rel="last"' in resp.headers["Link"]:
                         links = resp.headers["Link"].split(",")
                         for link in links:
@@ -169,30 +168,38 @@ def load_profile_config(path: Path) -> Dict[str, Any]:
         return {}
 
 
-def load_ascii_art(path: Path) -> List[str]:
-    if not path.exists():
-        return [
-            "  ██████╗  █████╗ ██████╗ ██╗   ██╗██╗████████╗",
-            " ██╔════╝ ██╔══██╗██╔══██╗██║   ██║██║╚══██╔══╝",
-            " ██║  ███╗███████║██████╔╝██║   ██║██║   ██║   ",
-            " ██║   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║   ██║   ",
-            " ╚██████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║   ██║   ",
-            "  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝   ╚═╝   ",
-        ]
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            lines = [line.rstrip("\r\n") for line in f]
-            return lines
-    except Exception as e:
-        print(f"Error reading ASCII file {path}: {e}", file=sys.stderr)
-        return ["(ASCII Art missing)"]
+def prepare_ascii_art() -> List[str]:
+    """Prepares ASCII art by converting assets/image.png if available, or reading assets/ascii.txt."""
+    if IMAGE_PATH.exists() and convert_image_to_ascii is not None:
+        try:
+            print(f"Converting {IMAGE_PATH.name} to ASCII art...")
+            ascii_text = convert_image_to_ascii(IMAGE_PATH, width=45, enhance_contrast=1.3)
+            ASCII_PATH.write_text(ascii_text, encoding="utf-8")
+            return [line.rstrip("\r\n") for line in ascii_text.splitlines()]
+        except Exception as e:
+            print(f"Warning: Failed to convert image to ASCII: {e}", file=sys.stderr)
+
+    if ASCII_PATH.exists():
+        try:
+            with open(ASCII_PATH, "r", encoding="utf-8") as f:
+                return [line.rstrip("\r\n") for line in f]
+        except Exception as e:
+            print(f"Error reading ASCII file {ASCII_PATH}: {e}", file=sys.stderr)
+
+    return [
+        "  ██████╗  █████╗ ██████╗ ██╗   ██╗██╗████████╗",
+        " ██╔════╝ ██╔══██╗██╔══██╗██║   ██║██║╚══██╔══╝",
+        " ██║  ███╗███████║██████╔╝██║   ██║██║   ██║   ",
+        " ██║   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║   ██║   ",
+        " ╚██████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║   ██║   ",
+        "  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝   ╚═╝   ",
+    ]
 
 
 def calculate_uptime(created_at_iso: Optional[str]) -> str:
     if not created_at_iso:
         return "N/A"
     try:
-        # Handle ISO format timestamp (e.g., 2021-09-15T12:34:56Z)
         created_at = datetime.fromisoformat(created_at_iso.replace("Z", "+00:00"))
         now = datetime.now(timezone.utc)
         delta = relativedelta(now, created_at)
@@ -230,9 +237,10 @@ def render_terminal_svg(
 ) -> str:
     username = config.get("username", DEFAULT_USERNAME)
     user_title = f"{username}@github"
+    avatar_mode = config.get("avatar_mode", "ascii")  # "ascii" or "image"
 
     # Gather rows for the right pane
-    rows: List[Tuple[str, str, str]] = []  # (type: 'info'|'section'|'link', label, value_or_link)
+    rows: List[Tuple[str, str, str]] = []
 
     # 1. System Info
     os_info = format_value(config.get("os", ["Linux", "macOS", "Windows"]))
@@ -249,7 +257,6 @@ def render_terminal_svg(
     rows.append(("info", "Kernel", kernel_info))
     rows.append(("info", "IDE", ide_info))
 
-    # Blank gap
     rows.append(("gap", "", ""))
 
     # 2. Languages & Tech
@@ -269,7 +276,6 @@ def render_terminal_svg(
     if config.get("tools"):
         rows.append(("info", "Tools", format_value(config["tools"])))
 
-    # Blank gap
     rows.append(("gap", "", ""))
 
     # 3. Interests
@@ -280,7 +286,6 @@ def render_terminal_svg(
         if interests.get("other"):
             rows.append(("info", "Hobbies.Other", format_value(interests["other"])))
 
-    # Blank gap
     rows.append(("gap", "", ""))
 
     # 4. Contact Section
@@ -310,7 +315,6 @@ def render_terminal_svg(
     header_y = 65
     content_start_y = 105
 
-    # Determine heights & widths
     ascii_line_count = len(ascii_lines)
     ascii_box_height = ascii_line_count * 18
     right_pane_line_count = len([r for r in rows if r[0] != "gap"]) + rows.count(("gap", "", "")) + 2
@@ -321,17 +325,23 @@ def render_terminal_svg(
     svg_height = int(max(680, total_content_height))
 
     left_pane_x = 45
-    ascii_font_size = 12
     ascii_line_height = 16
 
-    # Vertically center ASCII art relative to right pane height
     ascii_total_h = ascii_line_count * ascii_line_height
     ascii_start_y = content_start_y + max(0, (right_box_height - ascii_total_h) // 2) - 15
 
     right_pane_x = 510
     total_right_width_chars = 56
 
-    # Begin SVG construction
+    # Base64 Image string if avatar_mode is image
+    b64_image_data = ""
+    if avatar_mode == "image" and IMAGE_PATH.exists():
+        try:
+            with open(IMAGE_PATH, "rb") as img_f:
+                b64_image_data = base64.b64encode(img_f.read()).decode("utf-8")
+        except Exception as e:
+            print(f"Error encoding image to base64: {e}", file=sys.stderr)
+
     svg_parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}" width="{svg_width}" height="{svg_height}">',
         '  <defs>',
@@ -353,6 +363,7 @@ def render_terminal_svg(
         '      .separator-solid { stroke: #3b4252; stroke-width: 1.5; }',
         '      .stat-value { font-family: \'JetBrains Mono\', monospace; font-size: 14px; fill: #a3be8c; font-weight: 700; }',
         '      .v-sep { stroke: #212830; stroke-width: 1.5; stroke-dasharray: 3,3; }',
+        '      .img-frame { stroke: #e5a05b; stroke-width: 2; rx: 12px; ry: 12px; }',
         '    </style>',
         '  </defs>',
         '',
@@ -361,27 +372,39 @@ def render_terminal_svg(
         '',
         '  <!-- Terminal Header Bar -->',
         f'  <rect class="header-bg" x="10" y="10" width="{svg_width - 20}" height="38" rx="12" ry="12"/>',
-        '  <!-- Header control dots -->',
         '  <circle class="btn-red" cx="35" cy="29" r="6"/>',
         '  <circle class="btn-yellow" cx="53" cy="29" r="6"/>',
         '  <circle class="btn-green" cx="71" cy="29" r="6"/>',
         f'  <text class="term-title" x="{svg_width // 2}" y="33" text-anchor="middle">garvittsingla@github:~ (fastfetch)</text>',
         '',
-        '  <!-- Vertical Separator Line between ASCII and Info -->',
+        '  <!-- Vertical Separator Line between Left and Right Pane -->',
         f'  <line class="v-sep" x1="475" y1="65" x2="475" y2="{svg_height - 35}"/>',
         '',
-        '  <!-- LEFT PANE: ASCII Art -->',
-        f'  <text class="ascii-art" x="{left_pane_x}" y="{ascii_start_y}">',
     ]
 
-    # Insert ASCII Art lines
-    for idx, line in enumerate(ascii_lines):
-        dy_attr = f' dy="{ascii_line_height}"' if idx > 0 else ""
-        escaped_line = escape(line)
-        svg_parts.append(f'    <tspan x="{left_pane_x}"{dy_attr}>{escaped_line}</tspan>')
+    # Render Left Pane (Image or ASCII Art)
+    if avatar_mode == "image" and b64_image_data:
+        img_box_size = 380
+        img_y = content_start_y + max(0, (right_box_height - img_box_size) // 2)
+        svg_parts.extend([
+            '  <!-- LEFT PANE: Embedded Image -->',
+            f'  <rect class="img-frame" x="45" y="{img_y}" width="{img_box_size}" height="{img_box_size}" fill="none"/>',
+            f'  <image href="data:image/png;base64,{b64_image_data}" x="46" y="{img_y + 1}" width="{img_box_size - 2}" height="{img_box_size - 2}" preserveAspectRatio="xMidYMid slice" rx="10"/>',
+            ''
+        ])
+    else:
+        svg_parts.extend([
+            '  <!-- LEFT PANE: ASCII Art -->',
+            f'  <text class="ascii-art" x="{left_pane_x}" y="{ascii_start_y}">',
+        ])
+        for idx, line in enumerate(ascii_lines):
+            dy_attr = f' dy="{ascii_line_height}"' if idx > 0 else ""
+            escaped_line = escape(line)
+            svg_parts.append(f'    <tspan x="{left_pane_x}"{dy_attr}>{escaped_line}</tspan>')
 
-    svg_parts.append('  </text>')
-    svg_parts.append('')
+        svg_parts.append('  </text>')
+        svg_parts.append('')
+
     svg_parts.append('  <!-- RIGHT PANE: Fastfetch Details -->')
 
     # Top Title
@@ -400,7 +423,6 @@ def render_terminal_svg(
             continue
 
         if row_type == "section":
-            # Section header like "- Contact ---------------------------------"
             current_y += 6
             section_title = label
             dash_count = max(5, total_right_width_chars - len(section_title))
@@ -410,13 +432,10 @@ def render_terminal_svg(
             current_y += line_height
             continue
 
-        # Row type: 'info' or 'stat'
-        # Compute terminal dot alignment
         label_str = label
         val_str = str(val)
 
-        # Handle dot alignment calculation
-        target_dot_col = 25  # Column where dots end
+        target_dot_col = 25
         label_len = len(label_str)
 
         if label_len < target_dot_col:
@@ -431,10 +450,8 @@ def render_terminal_svg(
         svg_parts.append(f'    <tspan class="label">{escape(label_str)}</tspan>')
         svg_parts.append(f'    <tspan class="dots">{escape(dots_str)} </tspan>')
 
-        # Check if value is very long and needs clean rendering
         max_val_len = 42
         if len(val_str) > max_val_len:
-            # Wrap value into multiple lines if needed
             words = val_str.split(", ")
             line1_words = []
             line2_words = []
@@ -481,16 +498,13 @@ def validate_svg_xml(svg_content: str) -> bool:
 def main():
     print("--- Starting GitHub Profile Terminal SVG Generator ---")
 
-    # 1. Load Profile JSON
     config = load_profile_config(CONFIG_PATH)
     username = config.get("username", DEFAULT_USERNAME)
     print(f"Generating terminal profile for user: {username}")
 
-    # 2. Load ASCII Art
-    ascii_lines = load_ascii_art(ASCII_PATH)
+    ascii_lines = prepare_ascii_art()
     print(f"Loaded ASCII art ({len(ascii_lines)} lines).")
 
-    # 3. Fetch Dynamic Data from GitHub API
     gh_api = GitHubAPI(username=username)
 
     print("Fetching GitHub user profile...")
@@ -525,15 +539,12 @@ def main():
 
     print(f"Stats compiled: {stats}")
 
-    # 4. Render SVG
     svg_content = render_terminal_svg(config, ascii_lines, stats)
 
-    # 5. Validate SVG XML
     if not validate_svg_xml(svg_content):
         print("Error: Generated SVG failed XML validation!", file=sys.stderr)
         sys.exit(1)
 
-    # 6. Save SVG to Output Path
     OUTPUT_SVG_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_SVG_PATH, "w", encoding="utf-8") as f:
         f.write(svg_content)
