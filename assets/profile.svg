@@ -50,7 +50,7 @@
   <text x="510" y="135">
     <tspan class="label">Uptime</tspan>
     <tspan class="dots">................... </tspan>
-    <tspan class="value">N/A</tspan>
+    <tspan class="value">2 years, 5 months, 16 days</tspan>
   </text>
   <text x="510" y="159">
     <tspan class="label">Host</tspan>
@@ -133,7 +133,7 @@
   <text x="510" y="635">
     <tspan class="label">Repos</tspan>
     <tspan class="dots">.................... </tspan>
-    <tspan class="stat-value">0</tspan>
+    <tspan class="stat-value">72</tspan>
   </text>
   <text x="510" y="659">
     <tspan class="label">Stars</tspan>
@@ -143,21 +143,21 @@
   <text x="510" y="683">
     <tspan class="label">Forks</tspan>
     <tspan class="dots">.................... </tspan>
-    <tspan class="stat-value">0</tspan>
+    <tspan class="stat-value">24</tspan>
   </text>
   <text x="510" y="707">
     <tspan class="label">Public Contributions</tspan>
     <tspan class="dots">..... </tspan>
-    <tspan class="stat-value">N/A</tspan>
+    <tspan class="stat-value">370</tspan>
   </text>
   <text x="510" y="731">
     <tspan class="label">Followers</tspan>
     <tspan class="dots">................ </tspan>
-    <tspan class="stat-value">0</tspan>
+    <tspan class="stat-value">21</tspan>
   </text>
   <text x="510" y="755">
     <tspan class="label">Following</tspan>
     <tspan class="dots">................ </tspan>
-    <tspan class="stat-value">0</tspan>
+    <tspan class="stat-value">20</tspan>
   </text>
 </svg>
