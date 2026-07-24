@@ -3,8 +3,9 @@
 generate.py - GitHub Profile Terminal SVG Generator for @garvittsingla
 
 Fetches user configuration from profile.json, ASCII art from assets/ascii.txt
-(or converts assets/image.png automatically if present), and dynamic GitHub API stats,
-rendering a fastfetch/neofetch-styled dark terminal card saved to assets/profile.svg.
+(or converts assets/image.png automatically if present), and dynamic GitHub API stats
+(including open, merged, closed PR counts), rendering a fastfetch/neofetch-styled
+dark terminal card saved to assets/profile.svg.
 """
 
 import base64
@@ -155,6 +156,24 @@ class GitHubAPI:
 
         return "N/A"
 
+    def get_pr_stats(self) -> Dict[str, Any]:
+        """Queries GitHub Search API for Open, Merged, and Closed Pull Requests."""
+        pr_counts = {"open": "N/A", "merged": "N/A", "closed": "N/A"}
+
+        res_open = self.github_get("search/issues", params={"q": f"author:{self.username} type:pr state:open"})
+        if res_open and "total_count" in res_open:
+            pr_counts["open"] = res_open["total_count"]
+
+        res_merged = self.github_get("search/issues", params={"q": f"author:{self.username} type:pr is:merged"})
+        if res_merged and "total_count" in res_merged:
+            pr_counts["merged"] = res_merged["total_count"]
+
+        res_closed = self.github_get("search/issues", params={"q": f"author:{self.username} type:pr state:closed"})
+        if res_closed and "total_count" in res_closed:
+            pr_counts["closed"] = res_closed["total_count"]
+
+        return pr_counts
+
 
 def load_profile_config(path: Path) -> Dict[str, Any]:
     if not path.exists():
@@ -169,11 +188,10 @@ def load_profile_config(path: Path) -> Dict[str, Any]:
 
 
 def prepare_ascii_art() -> List[str]:
-    """Prepares ASCII art by converting assets/image.png if available, or reading assets/ascii.txt."""
     if IMAGE_PATH.exists() and convert_image_to_ascii is not None:
         try:
             print(f"Converting {IMAGE_PATH.name} to ASCII art...")
-            ascii_text = convert_image_to_ascii(IMAGE_PATH, width=45, enhance_contrast=1.3)
+            ascii_text = convert_image_to_ascii(IMAGE_PATH, width=40, enhance_contrast=1.3)
             ASCII_PATH.write_text(ascii_text, encoding="utf-8")
             return [line.rstrip("\r\n") for line in ascii_text.splitlines()]
         except Exception as e:
@@ -237,10 +255,10 @@ def render_terminal_svg(
 ) -> str:
     username = config.get("username", DEFAULT_USERNAME)
     user_title = f"{username}@github"
-    avatar_mode = config.get("avatar_mode", "ascii")  # "ascii" or "image"
+    avatar_mode = config.get("avatar_mode", "ascii")
 
-    # Gather rows for the right pane
-    rows: List[Tuple[str, str, str]] = []
+    # --- RIGHT PANE ROWS (System, Tech, Hobbies, Contact) ---
+    right_rows: List[Tuple[str, str, str]] = []
 
     # 1. System Info
     os_info = format_value(config.get("os", ["Linux", "macOS", "Windows"]))
@@ -251,89 +269,78 @@ def render_terminal_svg(
     kernel_info = config.get("role", "Software Developer")
     ide_info = format_value(config.get("ide", ["VS Code", "Neovim"]))
 
-    rows.append(("info", "OS", os_info))
-    rows.append(("info", "Uptime", uptime_info))
-    rows.append(("info", "Host", host_info))
-    rows.append(("info", "Kernel", kernel_info))
-    rows.append(("info", "IDE", ide_info))
+    right_rows.append(("info", "OS", os_info))
+    right_rows.append(("info", "Uptime", uptime_info))
+    right_rows.append(("info", "Host", host_info))
+    right_rows.append(("info", "Kernel", kernel_info))
+    right_rows.append(("info", "IDE", ide_info))
+    right_rows.append(("gap", "", ""))
 
-    rows.append(("gap", "", ""))
-
-    # 2. Languages & Tech
+    # 2. Languages & Tech Stack
     langs = config.get("languages", {})
     if isinstance(langs, dict):
         if langs.get("programming"):
-            rows.append(("info", "Languages.Programming", format_value(langs["programming"])))
+            right_rows.append(("info", "Languages.Programming", format_value(langs["programming"])))
         if langs.get("web"):
-            rows.append(("info", "Languages.Web", format_value(langs["web"])))
+            right_rows.append(("info", "Languages.Web", format_value(langs["web"])))
         if langs.get("computer"):
-            rows.append(("info", "Languages.Computer", format_value(langs["computer"])))
+            right_rows.append(("info", "Languages.Computer", format_value(langs["computer"])))
 
     if config.get("backend"):
-        rows.append(("info", "Frameworks.Backend", format_value(config["backend"])))
+        right_rows.append(("info", "Frameworks.Backend", format_value(config["backend"])))
     if config.get("databases"):
-        rows.append(("info", "Databases", format_value(config["databases"])))
+        right_rows.append(("info", "Databases", format_value(config["databases"])))
     if config.get("tools"):
-        rows.append(("info", "Tools", format_value(config["tools"])))
+        right_rows.append(("info", "Tools", format_value(config["tools"])))
+    right_rows.append(("gap", "", ""))
 
-    rows.append(("gap", "", ""))
-
-    # 3. Interests
+    # 3. Interests / Hobbies
     interests = config.get("interests", {})
     if isinstance(interests, dict):
         if interests.get("software"):
-            rows.append(("info", "Hobbies.Software", format_value(interests["software"])))
+            right_rows.append(("info", "Hobbies.Software", format_value(interests["software"])))
         if interests.get("other"):
-            rows.append(("info", "Hobbies.Other", format_value(interests["other"])))
+            right_rows.append(("info", "Hobbies.Other", format_value(interests["other"])))
+    right_rows.append(("gap", "", ""))
 
-    rows.append(("gap", "", ""))
-
-    # 4. Contact Section
+    # 4. Contact Section (on Right Pane)
     contacts = config.get("contact", {})
     has_contact = any(v for v in contacts.values()) if isinstance(contacts, dict) else False
     if has_contact or contacts:
-        rows.append(("section", "- Contact ", ""))
+        right_rows.append(("section", "- Contact ", ""))
         if isinstance(contacts, dict):
             for platform, handle in contacts.items():
                 if handle:
                     platform_label = platform.capitalize()
-                    rows.append(("info", platform_label, str(handle)))
+                    right_rows.append(("info", platform_label, str(handle)))
 
-        rows.append(("gap", "", ""))
+    # --- LEFT PANE STATS (Under ASCII/Image) ---
+    left_stats_rows: List[Tuple[str, str, str]] = [
+        ("section", "- GitHub Stats ", ""),
+        ("stat", "Repos", str(stats.get("public_repos", "N/A"))),
+        ("stat", "Stars", str(stats.get("total_stars", "N/A"))),
+        ("stat", "Forks", str(stats.get("total_forks", "N/A"))),
+        ("stat", "Public Contributions", str(stats.get("public_commits", "N/A"))),
+        ("stat", "Open PRs", str(stats.get("pr_open", "N/A"))),
+        ("stat", "Merged PRs", str(stats.get("pr_merged", "N/A"))),
+        ("stat", "Closed PRs", str(stats.get("pr_closed", "N/A"))),
+        ("stat", "Followers", str(stats.get("followers", "N/A"))),
+        ("stat", "Following", str(stats.get("following", "N/A"))),
+    ]
 
-    # 5. GitHub Stats Section
-    rows.append(("section", "- GitHub Stats ", ""))
-    rows.append(("stat", "Repos", str(stats.get("public_repos", "N/A"))))
-    rows.append(("stat", "Stars", str(stats.get("total_stars", "N/A"))))
-    rows.append(("stat", "Forks", str(stats.get("total_forks", "N/A"))))
-    rows.append(("stat", "Public Contributions", str(stats.get("public_commits", "N/A"))))
-    rows.append(("stat", "Followers", str(stats.get("followers", "N/A"))))
-    rows.append(("stat", "Following", str(stats.get("following", "N/A"))))
-
-    # Layout Calculations
-    line_height = 24
+    # --- LAYOUT DIMENSIONS & SPACING ---
+    line_height = 22
     header_y = 65
-    content_start_y = 105
+    content_start_y = 70
+
+    # Optimized coordinates to shift left pane right and remove empty gap
+    left_pane_x = 75
+    sep_x = 425
+    right_pane_x = 455
 
     ascii_line_count = len(ascii_lines)
-    ascii_box_height = ascii_line_count * 18
-    right_pane_line_count = len([r for r in rows if r[0] != "gap"]) + rows.count(("gap", "", "")) + 2
-    right_box_height = right_pane_line_count * line_height
+    ascii_line_height = 14
 
-    total_content_height = max(ascii_box_height + 100, right_box_height + 120)
-    svg_width = 1200
-    svg_height = int(max(680, total_content_height))
-
-    left_pane_x = 45
-    ascii_line_height = 16
-
-    ascii_total_h = ascii_line_count * ascii_line_height
-    ascii_start_y = content_start_y + max(0, (right_box_height - ascii_total_h) // 2) - 15
-
-    right_pane_x = 510
-    total_right_width_chars = 56
-
-    # Base64 Image string if avatar_mode is image
     b64_image_data = ""
     if avatar_mode == "image" and IMAGE_PATH.exists():
         try:
@@ -341,6 +348,32 @@ def render_terminal_svg(
                 b64_image_data = base64.b64encode(img_f.read()).decode("utf-8")
         except Exception as e:
             print(f"Error encoding image to base64: {e}", file=sys.stderr)
+
+    if avatar_mode == "image" and b64_image_data:
+        image_box_size = 280
+        image_end_y = content_start_y + image_box_size
+        left_stats_start_y = image_end_y + 18
+    else:
+        image_box_size = 0
+        ascii_height = ascii_line_count * ascii_line_height
+        left_stats_start_y = content_start_y + ascii_height + 15
+
+    left_total_h = left_stats_start_y + (len(left_stats_rows) * line_height) + 15
+
+    right_line_count = 0
+    for r in right_rows:
+        if r[0] == "gap":
+            right_line_count += 0.4
+        else:
+            right_line_count += 1
+            if len(str(r[2])) > 40:
+                right_line_count += 0.95
+
+    right_total_h = content_start_y + 35 + (right_line_count * line_height) + 20
+
+    total_content_height = max(left_total_h, right_total_h)
+    svg_width = 1200
+    svg_height = int(max(580, total_content_height))
 
     svg_parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}" width="{svg_width}" height="{svg_height}">',
@@ -353,17 +386,16 @@ def render_terminal_svg(
         '      .btn-yellow { fill: #ffbd2e; }',
         '      .btn-green { fill: #27c93f; }',
         '      .term-title { font-family: \'JetBrains Mono\', monospace; font-size: 13px; fill: #8b949e; font-weight: 500; }',
-        '      .user-host { font-family: \'JetBrains Mono\', monospace; font-size: 18px; fill: #a3be8c; font-weight: 700; }',
-        '      .ascii-art { font-family: \'JetBrains Mono\', monospace; font-size: 12px; fill: #88c0d0; white-space: pre; font-weight: 500; }',
-        '      .label { font-family: \'JetBrains Mono\', monospace; font-size: 14px; fill: #e5a05b; font-weight: 600; }',
-        '      .dots { font-family: \'JetBrains Mono\', monospace; font-size: 14px; fill: #4c566a; font-weight: 400; }',
-        '      .value { font-family: \'JetBrains Mono\', monospace; font-size: 14px; fill: #88c0d0; font-weight: 400; }',
-        '      .section-heading { font-family: \'JetBrains Mono\', monospace; font-size: 15px; fill: #d8dee9; font-weight: 700; }',
-        '      .separator-line { stroke: #3b4252; stroke-width: 1.5; stroke-dasharray: 4,4; }',
+        '      .user-host { font-family: \'JetBrains Mono\', monospace; font-size: 17px; fill: #a3be8c; font-weight: 700; }',
+        '      .ascii-art { font-family: \'JetBrains Mono\', monospace; font-size: 11px; fill: #88c0d0; white-space: pre; font-weight: 500; }',
+        '      .label { font-family: \'JetBrains Mono\', monospace; font-size: 13.5px; fill: #e5a05b; font-weight: 600; }',
+        '      .dots { font-family: \'JetBrains Mono\', monospace; font-size: 13.5px; fill: #4c566a; font-weight: 400; }',
+        '      .value { font-family: \'JetBrains Mono\', monospace; font-size: 13.5px; fill: #88c0d0; font-weight: 400; }',
+        '      .section-heading { font-family: \'JetBrains Mono\', monospace; font-size: 14.5px; fill: #d8dee9; font-weight: 700; }',
         '      .separator-solid { stroke: #3b4252; stroke-width: 1.5; }',
-        '      .stat-value { font-family: \'JetBrains Mono\', monospace; font-size: 14px; fill: #a3be8c; font-weight: 700; }',
+        '      .stat-value { font-family: \'JetBrains Mono\', monospace; font-size: 13.5px; fill: #a3be8c; font-weight: 700; }',
         '      .v-sep { stroke: #212830; stroke-width: 1.5; stroke-dasharray: 3,3; }',
-        '      .img-frame { stroke: #e5a05b; stroke-width: 2; rx: 12px; ry: 12px; }',
+        '      .img-frame { stroke: #e5a05b; stroke-width: 2; rx: 10px; ry: 10px; }',
         '    </style>',
         '  </defs>',
         '',
@@ -378,56 +410,81 @@ def render_terminal_svg(
         f'  <text class="term-title" x="{svg_width // 2}" y="33" text-anchor="middle">garvittsingla@github:~ (fastfetch)</text>',
         '',
         '  <!-- Vertical Separator Line between Left and Right Pane -->',
-        f'  <line class="v-sep" x1="475" y1="65" x2="475" y2="{svg_height - 35}"/>',
+        f'  <line class="v-sep" x1="{sep_x}" y1="55" x2="{sep_x}" y2="{svg_height - 25}"/>',
         '',
     ]
 
-    # Render Left Pane (Image or ASCII Art)
+    # --- RENDER LEFT PANE (ASCII Art or Image + GitHub Stats Below) ---
     if avatar_mode == "image" and b64_image_data:
-        img_box_size = 380
-        img_y = content_start_y + max(0, (right_box_height - img_box_size) // 2)
         svg_parts.extend([
             '  <!-- LEFT PANE: Embedded Image -->',
-            f'  <rect class="img-frame" x="45" y="{img_y}" width="{img_box_size}" height="{img_box_size}" fill="none"/>',
-            f'  <image href="data:image/png;base64,{b64_image_data}" x="46" y="{img_y + 1}" width="{img_box_size - 2}" height="{img_box_size - 2}" preserveAspectRatio="xMidYMid slice" rx="10"/>',
+            f'  <rect class="img-frame" x="{left_pane_x}" y="{content_start_y}" width="{image_box_size}" height="{image_box_size}" fill="none"/>',
+            f'  <image href="data:image/png;base64,{b64_image_data}" x="{left_pane_x + 1}" y="{content_start_y + 1}" width="{image_box_size - 2}" height="{image_box_size - 2}" preserveAspectRatio="xMidYMid slice" rx="9"/>',
             ''
         ])
     else:
         svg_parts.extend([
             '  <!-- LEFT PANE: ASCII Art -->',
-            f'  <text class="ascii-art" x="{left_pane_x}" y="{ascii_start_y}">',
+            f'  <text class="ascii-art" x="{left_pane_x}" y="{content_start_y + 10}">',
         ])
         for idx, line in enumerate(ascii_lines):
             dy_attr = f' dy="{ascii_line_height}"' if idx > 0 else ""
             escaped_line = escape(line)
             svg_parts.append(f'    <tspan x="{left_pane_x}"{dy_attr}>{escaped_line}</tspan>')
-
         svg_parts.append('  </text>')
         svg_parts.append('')
 
+    # Render GitHub Stats directly below the image/ASCII art on Left Pane
+    curr_left_y = left_stats_start_y
+    left_target_dot_col = 21
+
+    for row_type, label, val in left_stats_rows:
+        if row_type == "section":
+            curr_left_y += 4
+            dash_count = max(5, 34 - len(label))
+            full_header = f"{label}{'-' * dash_count}"
+            svg_parts.append(f'  <text class="section-heading" x="{left_pane_x}" y="{curr_left_y}">{escape(full_header)}</text>')
+            curr_left_y += line_height
+            continue
+
+        label_str = label
+        val_str = str(val)
+        label_len = len(label_str)
+
+        dots_count = max(1, left_target_dot_col - label_len)
+        dots_str = "." * dots_count
+
+        svg_parts.append(f'  <text x="{left_pane_x}" y="{curr_left_y}">')
+        svg_parts.append(f'    <tspan class="label">{escape(label_str)}</tspan>')
+        svg_parts.append(f'    <tspan class="dots">{escape(dots_str)} </tspan>')
+        svg_parts.append(f'    <tspan class="stat-value">{escape(val_str)}</tspan>')
+        svg_parts.append('  </text>')
+
+        curr_left_y += line_height
+
+    # --- RENDER RIGHT PANE (Details & Contact) ---
+    svg_parts.append('')
     svg_parts.append('  <!-- RIGHT PANE: Fastfetch Details -->')
 
-    # Top Title
-    current_y = header_y + 10
+    current_y = header_y + 8
     svg_parts.append(f'  <text class="user-host" x="{right_pane_x}" y="{current_y}">{escape(user_title)}</text>')
 
-    current_y += 12
-    svg_parts.append(f'  <line class="separator-solid" x1="{right_pane_x}" y1="{current_y}" x2="{svg_width - 45}" y2="{current_y}"/>')
+    current_y += 10
+    svg_parts.append(f'  <line class="separator-solid" x1="{right_pane_x}" y1="{current_y}" x2="{svg_width - 40}" y2="{current_y}"/>')
 
-    current_y += 24
+    current_y += 22
+    total_right_width_chars = 55
 
-    # Render Rows
-    for row_type, label, val in rows:
+    for row_type, label, val in right_rows:
         if row_type == "gap":
-            current_y += 10
+            current_y += 8
             continue
 
         if row_type == "section":
-            current_y += 6
+            current_y += 4
             section_title = label
             dash_count = max(5, total_right_width_chars - len(section_title))
-            dash_str = "-" * dash_count
-            full_header = f"{section_title}{dash_str}"
+            full_header = f"{section_title}{'-' * dash_count}"
             svg_parts.append(f'  <text class="section-heading" x="{right_pane_x}" y="{current_y}">{escape(full_header)}</text>')
             current_y += line_height
             continue
@@ -435,7 +492,7 @@ def render_terminal_svg(
         label_str = label
         val_str = str(val)
 
-        target_dot_col = 25
+        target_dot_col = 24
         label_len = len(label_str)
 
         if label_len < target_dot_col:
@@ -443,8 +500,6 @@ def render_terminal_svg(
             dots_str = "." * dots_count
         else:
             dots_str = "."
-
-        val_class = "stat-value" if row_type == "stat" else "value"
 
         svg_parts.append(f'  <text x="{right_pane_x}" y="{current_y}">')
         svg_parts.append(f'    <tspan class="label">{escape(label_str)}</tspan>')
@@ -466,7 +521,7 @@ def render_terminal_svg(
             l1_text = ", ".join(line1_words)
             l2_text = ", ".join(line2_words)
 
-            svg_parts.append(f'    <tspan class="{val_class}">{escape(l1_text)}</tspan>')
+            svg_parts.append(f'    <tspan class="value">{escape(l1_text)}</tspan>')
             svg_parts.append('  </text>')
 
             if l2_text:
@@ -474,10 +529,10 @@ def render_terminal_svg(
                 indent_dots = " " * (target_dot_col + 1)
                 svg_parts.append(f'  <text x="{right_pane_x}" y="{current_y}">')
                 svg_parts.append(f'    <tspan class="dots">{escape(indent_dots)}</tspan>')
-                svg_parts.append(f'    <tspan class="{val_class}">{escape(l2_text)}</tspan>')
+                svg_parts.append(f'    <tspan class="value">{escape(l2_text)}</tspan>')
                 svg_parts.append('  </text>')
         else:
-            svg_parts.append(f'    <tspan class="{val_class}">{escape(val_str)}</tspan>')
+            svg_parts.append(f'    <tspan class="{val_class if "val_class" in locals() else "value"}">{escape(val_str)}</tspan>')
             svg_parts.append('  </text>')
 
         current_y += line_height
@@ -524,6 +579,9 @@ def main():
     print("Estimating public contributions/commits...")
     public_commits = gh_api.get_public_commits_estimate(owned_repos)
 
+    print("Fetching PR statistics (open, merged, closed)...")
+    pr_stats = gh_api.get_pr_stats()
+
     uptime_str = calculate_uptime(created_at)
 
     stats = {
@@ -535,6 +593,9 @@ def main():
         "total_stars": total_stars,
         "total_forks": total_forks,
         "public_commits": public_commits,
+        "pr_open": pr_stats.get("open", "N/A"),
+        "pr_merged": pr_stats.get("merged", "N/A"),
+        "pr_closed": pr_stats.get("closed", "N/A"),
     }
 
     print(f"Stats compiled: {stats}")
