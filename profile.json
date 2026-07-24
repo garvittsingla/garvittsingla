@@ -1,0 +1,77 @@
+{
+  "username": "garvittsingla",
+  "name": "Garvit Singla",
+  "role": "Software Developer",
+  "education": "CSE Student",
+  "os": [
+    "Linux",
+    "macOS",
+    "Windows"
+  ],
+  "ide": [
+    "Neovim",
+    "VS Code"
+  ],
+  "languages": {
+    "programming": [
+      "C++",
+      "Rust",
+      "TypeScript",
+      "JavaScript",
+      "Java",
+      "Python",
+      "C"
+    ],
+    "web": [
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "Three.js",
+      "React Three Fiber"
+    ],
+    "computer": [
+      "HTML",
+      "CSS",
+      "SQL",
+      "JSON",
+      "YAML"
+    ]
+  },
+  "backend": [
+    "Node.js",
+    "Express"
+  ],
+  "databases": [
+    "PostgreSQL",
+    "MongoDB",
+    "Supabase",
+    "Prisma",
+    "Mongoose"
+  ],
+  "tools": [
+    "Docker",
+    "Git",
+    "GitHub",
+    "Postman"
+  ],
+  "interests": {
+    "software": [
+      "Open Source",
+      "Linux",
+      "Systems Programming",
+      "Building Products"
+    ],
+    "other": [
+      "Game Development",
+      "Web Development"
+    ]
+  },
+  "contact": {
+    "github": "garvittsingla",
+    "linkedin": "",
+    "leetcode": "",
+    "codeforces": "",
+    "email": "",
+    "discord": ""
+  }
+}

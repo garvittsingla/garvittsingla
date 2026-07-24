@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 792" width="1200" height="792">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&amp;display=swap');
+      .term-bg { fill: #111820; stroke: #212830; stroke-width: 2; }
+      .header-bg { fill: #18202a; stroke: #212830; stroke-width: 1; }
+      .btn-red { fill: #ff5f56; }
+      .btn-yellow { fill: #ffbd2e; }
+      .btn-green { fill: #27c93f; }
+      .term-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; fill: #8b949e; font-weight: 500; }
+      .user-host { font-family: 'JetBrains Mono', monospace; font-size: 18px; fill: #a3be8c; font-weight: 700; }
+      .ascii-art { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #88c0d0; white-space: pre; font-weight: 500; }
+      .label { font-family: 'JetBrains Mono', monospace; font-size: 14px; fill: #e5a05b; font-weight: 600; }
+      .dots { font-family: 'JetBrains Mono', monospace; font-size: 14px; fill: #4c566a; font-weight: 400; }
+      .value { font-family: 'JetBrains Mono', monospace; font-size: 14px; fill: #88c0d0; font-weight: 400; }
+      .section-heading { font-family: 'JetBrains Mono', monospace; font-size: 15px; fill: #d8dee9; font-weight: 700; }
+      .separator-line { stroke: #3b4252; stroke-width: 1.5; stroke-dasharray: 4,4; }
+      .separator-solid { stroke: #3b4252; stroke-width: 1.5; }
+      .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 14px; fill: #a3be8c; font-weight: 700; }
+      .v-sep { stroke: #212830; stroke-width: 1.5; stroke-dasharray: 3,3; }
+    </style>
+  </defs>
+
+  <!-- Terminal Window Background -->
+  <rect class="term-bg" x="10" y="10" width="1180" height="772" rx="12" ry="12"/>
+
+  <!-- Terminal Header Bar -->
+  <rect class="header-bg" x="10" y="10" width="1180" height="38" rx="12" ry="12"/>
+  <!-- Header control dots -->
+  <circle class="btn-red" cx="35" cy="29" r="6"/>
+  <circle class="btn-yellow" cx="53" cy="29" r="6"/>
+  <circle class="btn-green" cx="71" cy="29" r="6"/>
+  <text class="term-title" x="600" y="33" text-anchor="middle">garvittsingla@github:~ (fastfetch)</text>
+
+  <!-- Vertical Separator Line between ASCII and Info -->
+  <line class="v-sep" x1="475" y1="65" x2="475" y2="757"/>
+
+  <!-- LEFT PANE: ASCII Art -->
+  <text class="ascii-art" x="45" y="314">
+    <tspan x="45">       ██████╗  █████╗ ██████╗ ██╗   ██╗██╗████████╗</tspan>
+    <tspan x="45" dy="16">      ██╔════╝ ██╔══██╗██╔══██╗██║   ██║██║╚══██╔══╝</tspan>
+    <tspan x="45" dy="16">      ██║  ███╗███████║██████╔╝██║   ██║██║   ██║   </tspan>
+    <tspan x="45" dy="16">      ██║   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║   ██║   </tspan>
+    <tspan x="45" dy="16">      ╚██████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║   ██║   </tspan>
+    <tspan x="45" dy="16">       ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝   ╚═╝   </tspan>
+    <tspan x="45" dy="16">                        </tspan>
+    <tspan x="45" dy="16">                       .---.</tspan>
+    <tspan x="45" dy="16">                      |o_o  |</tspan>
+    <tspan x="45" dy="16">                      |:_/  |</tspan>
+    <tspan x="45" dy="16">                     //   \ \</tspan>
+    <tspan x="45" dy="16">                    (|     | )</tspan>
+    <tspan x="45" dy="16">                   /&#x27;\_   _/`\</tspan>
+    <tspan x="45" dy="16">                   \___)=(___/</tspan>
+  </text>
+
+  <!-- RIGHT PANE: Fastfetch Details -->
+  <text class="user-host" x="510" y="75">garvittsingla@github</text>
+  <line class="separator-solid" x1="510" y1="87" x2="1155" y2="87"/>
+  <text x="510" y="111">
+    <tspan class="label">OS</tspan>
+    <tspan class="dots">....................... </tspan>
+    <tspan class="value">Linux, macOS, Windows</tspan>
+  </text>
+  <text x="510" y="135">
+    <tspan class="label">Uptime</tspan>
+    <tspan class="dots">................... </tspan>
+    <tspan class="value">2 years, 5 months, 16 days</tspan>
+  </text>
+  <text x="510" y="159">
+    <tspan class="label">Host</tspan>
+    <tspan class="dots">..................... </tspan>
+    <tspan class="value">Garvit Singla (CSE Student)</tspan>
+  </text>
+  <text x="510" y="183">
+    <tspan class="label">Kernel</tspan>
+    <tspan class="dots">................... </tspan>
+    <tspan class="value">Software Developer</tspan>
+  </text>
+  <text x="510" y="207">
+    <tspan class="label">IDE</tspan>
+    <tspan class="dots">...................... </tspan>
+    <tspan class="value">Neovim, VS Code</tspan>
+  </text>
+  <text x="510" y="241">
+    <tspan class="label">Languages.Programming</tspan>
+    <tspan class="dots">.... </tspan>
+    <tspan class="value">C++, Rust, TypeScript, JavaScript, Java</tspan>
+  </text>
+  <text x="510" y="263">
+    <tspan class="dots">                          </tspan>
+    <tspan class="value">Python, C</tspan>
+  </text>
+  <text x="510" y="287">
+    <tspan class="label">Languages.Web</tspan>
+    <tspan class="dots">............ </tspan>
+    <tspan class="value">React, Next.js, Tailwind CSS, Three.js</tspan>
+  </text>
+  <text x="510" y="309">
+    <tspan class="dots">                          </tspan>
+    <tspan class="value">React Three Fiber</tspan>
+  </text>
+  <text x="510" y="333">
+    <tspan class="label">Languages.Computer</tspan>
+    <tspan class="dots">....... </tspan>
+    <tspan class="value">HTML, CSS, SQL, JSON, YAML</tspan>
+  </text>
+  <text x="510" y="357">
+    <tspan class="label">Frameworks.Backend</tspan>
+    <tspan class="dots">....... </tspan>
+    <tspan class="value">Node.js, Express</tspan>
+  </text>
+  <text x="510" y="381">
+    <tspan class="label">Databases</tspan>
+    <tspan class="dots">................ </tspan>
+    <tspan class="value">PostgreSQL, MongoDB, Supabase, Prisma</tspan>
+  </text>
+  <text x="510" y="403">
+    <tspan class="dots">                          </tspan>
+    <tspan class="value">Mongoose</tspan>
+  </text>
+  <text x="510" y="427">
+    <tspan class="label">Tools</tspan>
+    <tspan class="dots">.................... </tspan>
+    <tspan class="value">Docker, Git, GitHub, Postman</tspan>
+  </text>
+  <text x="510" y="461">
+    <tspan class="label">Hobbies.Software</tspan>
+    <tspan class="dots">......... </tspan>
+    <tspan class="value">Open Source, Linux, Systems Programming</tspan>
+  </text>
+  <text x="510" y="483">
+    <tspan class="dots">                          </tspan>
+    <tspan class="value">Building Products</tspan>
+  </text>
+  <text x="510" y="507">
+    <tspan class="label">Hobbies.Other</tspan>
+    <tspan class="dots">............ </tspan>
+    <tspan class="value">Game Development, Web Development</tspan>
+  </text>
+  <text class="section-heading" x="510" y="547">- Contact ----------------------------------------------</text>
+  <text x="510" y="571">
+    <tspan class="label">Github</tspan>
+    <tspan class="dots">................... </tspan>
+    <tspan class="value">garvittsingla</tspan>
+  </text>
+  <text class="section-heading" x="510" y="611">- GitHub Stats -----------------------------------------</text>
+  <text x="510" y="635">
+    <tspan class="label">Repos</tspan>
+    <tspan class="dots">.................... </tspan>
+    <tspan class="stat-value">72</tspan>
+  </text>
+  <text x="510" y="659">
+    <tspan class="label">Stars</tspan>
+    <tspan class="dots">.................... </tspan>
+    <tspan class="stat-value">0</tspan>
+  </text>
+  <text x="510" y="683">
+    <tspan class="label">Forks</tspan>
+    <tspan class="dots">.................... </tspan>
+    <tspan class="stat-value">24</tspan>
+  </text>
+  <text x="510" y="707">
+    <tspan class="label">Public Contributions</tspan>
+    <tspan class="dots">..... </tspan>
+    <tspan class="stat-value">62+</tspan>
+  </text>
+  <text x="510" y="731">
+    <tspan class="label">Followers</tspan>
+    <tspan class="dots">................ </tspan>
+    <tspan class="stat-value">21</tspan>
+  </text>
+  <text x="510" y="755">
+    <tspan class="label">Following</tspan>
+    <tspan class="dots">................ </tspan>
+    <tspan class="stat-value">20</tspan>
+  </text>
+</svg>

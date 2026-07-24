@@ -1,20 +1,38 @@
-I love blending performance, design, and engineering into projects that *feel alive*.
+<div align="center">
+  <img src="./assets/profile.svg" width="100%" alt="Garvit Singla terminal profile" />
+</div>
 
-### 🧠 Core Languages
-`C++` • `Rust` • `TypeScript` • `JavaScript`
+<br />
 
-### ⚡ Frameworks / Libraries
-`Next.js` • `React.js` • `Tailwind CSS` • `Express` • `Ratatui` • `React Three Fibre`
+<details>
+<summary>⚡ How this profile works</summary>
 
-### 🗄️ Databases / ORM
-`PostgreSQL` • `MongoDB` • `Prisma` • `Mongoose` • `Supabase`
+<br />
 
-### 🧰 Tools & Utilities
-`Node.js` • `Zod` • `JWT` • `Postman` • `Docker`
+```text
+               GitHub API
+                   │
+                   ▼
+profile.json ──> generate.py <── assets/ascii.txt
+                   │
+                   ▼
+           assets/profile.svg
+                   │
+                   ▼
+                README.md
+```
 
----
+### Automation & Customization
+- **Personal Information**: Edit `profile.json` to update role, education, tech stack, hobbies, or social links.
+- **ASCII Art**: Replace or customize `assets/ascii.txt` (or convert an image using `python image_to_ascii.py image.png`).
+- **GitHub Workflow**: `.github/workflows/update-profile.yml` runs automatically every 6 hours or on push to fetch updated statistics and regenerate `assets/profile.svg`.
 
-Mail me to  : 📬 **[garvitsingla4751@gmail.com](mailto:garvitsingla4751@gmail.com)**  
+### Local Execution
+```bash
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python generate.py
+```
 
-
-> currently crafting web3 and low level
+</details>
