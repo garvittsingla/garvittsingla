@@ -3,3 +3,15 @@
 </div>
 
 <br />
+
+<div align="center">
+
+### 📱 Send a Push Notification to My Phone
+
+Want to send a message directly to my mobile device? Run this in your terminal:
+
+```bash
+curl -d "Hello Garvit!" ntfy.sh/garvit-singla
+```
+
+</div>
