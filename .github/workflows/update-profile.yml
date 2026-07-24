@@ -49,3 +49,10 @@ jobs:
             git commit -m "chore: auto-update terminal profile SVG"
             git push
           fi
+
+      - name: Send ntfy notification
+        run: |
+          curl -s -H "Title: GitHub Profile Update" \
+               -H "Tags: white_check_mark,rocket" \
+               -d "README updated" \
+               ntfy.sh/garvit-test-server
