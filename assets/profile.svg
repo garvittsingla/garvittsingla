@@ -158,12 +158,12 @@
   <text x="510" y="755">
     <tspan class="label">Forks</tspan>
     <tspan class="dots">.................... </tspan>
-    <tspan class="stat-value">24</tspan>
+    <tspan class="stat-value">23</tspan>
   </text>
   <text x="510" y="779">
     <tspan class="label">Public Contributions</tspan>
     <tspan class="dots">..... </tspan>
-    <tspan class="stat-value">370</tspan>
+    <tspan class="stat-value">366</tspan>
   </text>
   <text x="510" y="803">
     <tspan class="label">Followers</tspan>
