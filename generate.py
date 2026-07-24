@@ -532,7 +532,7 @@ def render_terminal_svg(
                 svg_parts.append(f'    <tspan class="value">{escape(l2_text)}</tspan>')
                 svg_parts.append('  </text>')
         else:
-            svg_parts.append(f'    <tspan class="{val_class if "val_class" in locals() else "value"}">{escape(val_str)}</tspan>')
+            svg_parts.append(f'    <tspan class="value">{escape(val_str)}</tspan>')
             svg_parts.append('  </text>')
 
         current_y += line_height
