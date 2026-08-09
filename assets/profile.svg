@@ -57,7 +57,7 @@
   <text x="75" y="460">
     <tspan class="label">Public Contributions</tspan>
     <tspan class="dots">. </tspan>
-    <tspan class="stat-value">406</tspan>
+    <tspan class="stat-value">414</tspan>
   </text>
   <text x="75" y="482">
     <tspan class="label">Open PRs</tspan>
@@ -77,7 +77,7 @@
   <text x="75" y="548">
     <tspan class="label">Followers</tspan>
     <tspan class="dots">............ </tspan>
-    <tspan class="stat-value">21</tspan>
+    <tspan class="stat-value">22</tspan>
   </text>
   <text x="75" y="570">
     <tspan class="label">Following</tspan>
@@ -96,7 +96,7 @@
   <text x="455" y="127">
     <tspan class="label">Uptime</tspan>
     <tspan class="dots">.................. </tspan>
-    <tspan class="value">2 years, 6 months</tspan>
+    <tspan class="value">2 years, 6 months, 1 day</tspan>
   </text>
   <text x="455" y="149">
     <tspan class="label">Host</tspan>
