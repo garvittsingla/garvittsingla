@@ -57,7 +57,7 @@
   <text x="75" y="460">
     <tspan class="label">Public Contributions</tspan>
     <tspan class="dots">. </tspan>
-    <tspan class="stat-value">412</tspan>
+    <tspan class="stat-value">413</tspan>
   </text>
   <text x="75" y="482">
     <tspan class="label">Open PRs</tspan>
@@ -82,7 +82,7 @@
   <text x="75" y="570">
     <tspan class="label">Following</tspan>
     <tspan class="dots">............ </tspan>
-    <tspan class="stat-value">19</tspan>
+    <tspan class="stat-value">20</tspan>
   </text>
 
   <!-- RIGHT PANE: Fastfetch Details -->
@@ -96,7 +96,7 @@
   <text x="455" y="127">
     <tspan class="label">Uptime</tspan>
     <tspan class="dots">.................. </tspan>
-    <tspan class="value">2 years, 6 months, 3 days</tspan>
+    <tspan class="value">2 years, 6 months, 4 days</tspan>
   </text>
   <text x="455" y="149">
     <tspan class="label">Host</tspan>
