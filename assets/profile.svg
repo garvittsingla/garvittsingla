@@ -77,7 +77,7 @@
   <text x="75" y="548">
     <tspan class="label">Followers</tspan>
     <tspan class="dots">............ </tspan>
-    <tspan class="stat-value">21</tspan>
+    <tspan class="stat-value">22</tspan>
   </text>
   <text x="75" y="570">
     <tspan class="label">Following</tspan>
@@ -96,7 +96,7 @@
   <text x="455" y="127">
     <tspan class="label">Uptime</tspan>
     <tspan class="dots">.................. </tspan>
-    <tspan class="value">2 years, 6 months, 15 days</tspan>
+    <tspan class="value">2 years, 6 months, 16 days</tspan>
   </text>
   <text x="455" y="149">
     <tspan class="label">Host</tspan>
