@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Design Comparison · Garvit Singla</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: #ffffff;
+      color: #24292f;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    p {
+      color: #8b949e;
+      font-size: 14px;
+    }
+    body.light p {
+      color: #57606a;
+    }
+
+    /* Controls Bar */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 16px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    body.light .controls {
+      background: #f6f8fa;
+      border-color: #d0d7de;
+    }
+
+    /* Segmented Switcher */
+    .segmented {
+      display: inline-flex;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px;
+      border-radius: 8px;
+      gap: 4px;
+    }
+    body.light .segmented {
+      background: #e1e4e8;
+    }
+
+    .seg-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      color: #8b949e;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .seg-btn.active {
+      background: #238636;
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    body.light .seg-btn {
+      color: #57606a;
+    }
+    body.light .seg-btn.active {
+      background: #2da44e;
+      color: #ffffff;
+    }
+
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: inherit;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    body.light .theme-toggle {
+      background: #ffffff;
+      border-color: #d0d7de;
+    }
+
+    /* Card Preview Area */
+    .preview-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+    }
+    body.light .preview-card {
+      background: #ffffff;
+      border-color: #d0d7de;
+      box-shadow: 0 8px 24px rgba(140, 149, 159, 0.15);
+    }
+
+    .card-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #58a6ff;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-label span {
+      color: #8b949e;
+      font-size: 12px;
+      text-transform: none;
+      font-weight: normal;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .instructions {
+      background: rgba(56, 139, 253, 0.1);
+      border: 1px solid rgba(56, 139, 253, 0.3);
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .instructions code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+    body.light .instructions code {
+      background: rgba(0,0,0,0.06);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Hero Design Switcher</h1>
+      <p>Compare all 3 designs in both Dark and Light mode, then lock in your favorite.</p>
+    </header>
+
+    <div class="controls">
+      <div class="segmented">
+        <button class="seg-btn active" onclick="setOption(1)">1. macOS Browser</button>
+        <button class="seg-btn" onclick="setOption(2)">2. Sketchbook Canvas</button>
+        <button class="seg-btn" onclick="setOption(3)">3. Minimalist Card</button>
+      </div>
+
+      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">☀️ Switch to Light Mode</button>
+    </div>
+
+    <div class="preview-card">
+      <div class="card-label" id="cardLabel">
+        Option 1: macOS / Arc Browser Frame <span>· Live screenshot framed with native traffic-light chrome</span>
+      </div>
+      <img id="heroImage" class="hero-img" src="assets/opt1-browser-dark.svg" alt="Preview">
+    </div>
+
+    <div class="instructions">
+      <b>💡 How to choose your final hero:</b><br>
+      Once you pick your favorite, open <code>profile.json</code> and set <code>"heroStyle": 1</code> (or <code>2</code> or <code>3</code>), then run <code>npm run build</code>!
+    </div>
+  </div>
+
+  <script>
+    let currentOption = 1;
+    let currentTheme = 'dark';
+
+    const descriptions = {
+      1: "Option 1: macOS / Arc Browser Frame <span>· Live screenshot inside a floating macOS browser mockup</span>",
+      2: "Option 2: Studio Desk / Sketchbook Canvas <span>· Framed Polaroid, washi tape, Gloria Hallelujah handwriting & squiggle</span>",
+      3: "Option 3: Minimalist Developer Card <span>· Compact, razor-sharp Linear/Apple style card with gradient avatar ring</span>"
+    };
+
+    const files = {
+      1: { dark: 'assets/opt1-browser-dark.svg', light: 'assets/opt1-browser-light.svg' },
+      2: { dark: 'assets/opt2-sketchbook-dark.svg', light: 'assets/opt2-sketchbook-light.svg' },
+      3: { dark: 'assets/opt3-minimal-dark.svg', light: 'assets/opt3-minimal-light.svg' }
+    };
+
+    function update() {
+      document.getElementById('heroImage').src = files[currentOption][currentTheme];
+      document.getElementById('cardLabel').innerHTML = descriptions[currentOption];
+      
+      const btns = document.querySelectorAll('.seg-btn');
+      btns.forEach((b, i) => {
+        b.classList.toggle('active', i + 1 === currentOption);
+      });
+
+      document.body.classList.toggle('light', currentTheme === 'light');
+      document.getElementById('themeBtn').textContent = currentTheme === 'dark' ? '☀️ Switch to Light Mode' : '🌙 Switch to Dark Mode';
+    }
+
+    function setOption(opt) {
+      currentOption = opt;
+      update();
+    }
+
+    function toggleTheme() {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      update();
+    }
+  </script>
+</body>
+</html>

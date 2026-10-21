@@ -1,9 +1,42 @@
+> [!TIP]
+> **Click any tab below to toggle between the 3 hero designs:**
+
+<details open>
+  <summary><b>Option 1: macOS / Arc Browser Frame (Active)</b></summary>
+  <br>
+
 <a href="https://garvitsingla.in" target="_blank" rel="noopener noreferrer">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/intro-dark.png">
-    <img alt="Garvit Singla — Software Engineer & Builder" src="assets/intro-light.png" width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/opt1-browser-dark.svg">
+    <img alt="Option 1: macOS Browser Frame" src="assets/opt1-browser-light.svg" width="100%">
   </picture>
 </a>
+</details>
+
+<details>
+  <summary><b>Option 2: Studio Desk / Sketchbook Canvas</b></summary>
+  <br>
+
+<a href="https://garvitsingla.in" target="_blank" rel="noopener noreferrer">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/opt2-sketchbook-dark.svg">
+    <img alt="Option 2: Sketchbook Canvas" src="assets/opt2-sketchbook-light.svg" width="100%">
+  </picture>
+</a>
+</details>
+
+<details>
+  <summary><b>Option 3: Minimalist Developer Card</b></summary>
+  <br>
+
+<a href="https://garvitsingla.in" target="_blank" rel="noopener noreferrer">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/opt3-minimal-dark.svg">
+    <img alt="Option 3: Minimalist Developer Card" src="assets/opt3-minimal-light.svg" width="100%">
+  </picture>
+</a>
+</details>
+
 
 ### things i recently did
 
