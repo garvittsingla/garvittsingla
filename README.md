@@ -34,7 +34,7 @@
   </picture>
 </h2>
 
-[portfolio](https://garvitsingla.in) &nbsp;·&nbsp; [github](https://github.com/garvittsingla) &nbsp;·&nbsp; [linkedin](https://linkedin.com/in/garvittsingla) &nbsp;·&nbsp; [x / twitter](https://twitter.com/garvitsinglaa) &nbsp;·&nbsp; [email](mailto:garvitsingla4751@gmail.com)
+[web](https://garvitsingla.in) &nbsp;·&nbsp; [linkedin](https://linkedin.com/in/garvittsingla) &nbsp;·&nbsp; [x](https://twitter.com/garvitsinglaa) &nbsp;·&nbsp; [email](mailto:garvitsingla4751@gmail.com)
 
 <br>
 

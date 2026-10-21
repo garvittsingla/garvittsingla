@@ -31,10 +31,9 @@
     }
   ],
   "socials": [
-    { "name": "portfolio", "url": "https://garvitsingla.in" },
-    { "name": "github", "url": "https://github.com/garvittsingla" },
+    { "name": "web", "url": "https://garvitsingla.in" },
     { "name": "linkedin", "url": "https://linkedin.com/in/garvittsingla" },
-    { "name": "x / twitter", "url": "https://twitter.com/garvitsinglaa" },
+    { "name": "x", "url": "https://twitter.com/garvitsinglaa" },
     { "name": "email", "url": "mailto:garvitsingla4751@gmail.com" }
   ]
 }
