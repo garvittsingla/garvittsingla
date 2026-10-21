@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "build:hero": "node scripts/build_hero.mjs"
+    "build:assets": "node scripts/build_assets.mjs"
   },
   "repository": {
     "type": "git",
