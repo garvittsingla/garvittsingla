@@ -516,14 +516,19 @@ function buildSignoff(themeName) {
 
 // ── BUILD ALL ASSETS ───────────────────────────────────────────────────
 function main() {
-  console.log('Generating hero assets for garvittsingla/garvittsingla...');
+  console.log('Generating assets for garvittsingla/garvittsingla...');
 
   for (const theme of ['dark', 'light']) {
     fs.writeFileSync(path.join(ASSETS_DIR, `hero-${theme}.svg`), buildHero(theme));
+    fs.writeFileSync(path.join(ASSETS_DIR, `wire-${theme}.svg`), buildWire(theme));
+    fs.writeFileSync(path.join(ASSETS_DIR, `signoff-${theme}.svg`), buildSignoff(theme));
+    fs.writeFileSync(path.join(ASSETS_DIR, `label-built-${theme}.svg`), buildLabel('things i’ve built & shipped', theme));
+    fs.writeFileSync(path.join(ASSETS_DIR, `label-exp-${theme}.svg`), buildLabel('places i’ve grown · experience', theme));
+    fs.writeFileSync(path.join(ASSETS_DIR, `label-socials-${theme}.svg`), buildLabel('✎ socials ➔', theme));
   }
 
   const files = fs.readdirSync(ASSETS_DIR);
-  console.log(`Successfully generated hero assets in ${ASSETS_DIR}:`);
+  console.log(`Successfully generated ${files.length} assets in ${ASSETS_DIR}:`);
   for (const file of files) {
     const stats = fs.statSync(path.join(ASSETS_DIR, file));
     console.log(`  - ${file} (${(stats.size / 1024).toFixed(1)} KB)`);
