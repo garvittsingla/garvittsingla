@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 24" width="1200" height="24" role="img" aria-label="Networking wire divider">
+  <defs>
+    <linearGradient id="packetGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0" />
+      <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="1" />
+    </linearGradient>
+  </defs>
+  <style>
+    .packet {
+      animation: packetRun 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      opacity: 0;
+    }
+    .p-1 { animation-delay: 0s; }
+    .p-2 { animation-delay: 2.1s; }
+    .p-3 { animation-delay: 4.3s; }
+
+    @keyframes packetRun {
+      0% { transform: translateX(0); opacity: 0; }
+      8% { opacity: 1; }
+      92% { opacity: 1; }
+      100% { transform: translateX(1350px); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .packet { animation: none; opacity: 0; }
+    }
+  </style>
+
+  <!-- Main Wire Rule -->
+  <line x1="0" y1="12" x2="1200" y2="12" stroke="rgba(245, 158, 11, 0.25)" stroke-width="1.2" />
+
+  <!-- Animated Data Packets in Heading Amber Accent -->
+  <rect class="packet p-1" x="-120" y="10" width="120" height="4" rx="2" fill="url(#packetGrad)" />
+  <rect class="packet p-2" x="-120" y="10" width="80" height="4" rx="2" fill="url(#packetGrad)" />
+  <rect class="packet p-3" x="-120" y="10" width="140" height="4" rx="2" fill="url(#packetGrad)" />
+</svg>

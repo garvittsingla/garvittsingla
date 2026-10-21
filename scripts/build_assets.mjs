@@ -354,16 +354,15 @@ function buildWire(themeName) {
   const t = THEMES[themeName];
   const isDark = themeName === 'dark';
   const packetColor = t.accentAmber;
-  const leadColor = isDark ? '#fef08a' : '#f59e0b';
-  const wireBase = isDark ? 'rgba(245, 158, 11, 0.20)' : 'rgba(180, 83, 9, 0.20)';
+  const wireBase = isDark ? 'rgba(245, 158, 11, 0.25)' : 'rgba(180, 83, 9, 0.25)';
 
   return `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 24" width="1200" height="24" role="img" aria-label="Networking wire divider">
   <defs>
     <linearGradient id="packetGrad" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="${packetColor}" stop-opacity="0" />
-      <stop offset="70%" stop-color="${packetColor}" stop-opacity="0.9" />
-      <stop offset="100%" stop-color="${leadColor}" stop-opacity="1" />
+      <stop offset="70%" stop-color="${packetColor}" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="${packetColor}" stop-opacity="1" />
     </linearGradient>
   </defs>
   <style>
@@ -422,6 +421,7 @@ function main() {
   for (const theme of ['dark', 'light']) {
     fs.writeFileSync(path.join(ASSETS_DIR, `hero-${theme}.svg`), buildHero(theme));
     fs.writeFileSync(path.join(ASSETS_DIR, `wire-${theme}.svg`), buildWire(theme));
+    fs.writeFileSync(path.join(ASSETS_DIR, `wire-amber-${theme}.svg`), buildWire(theme));
     fs.writeFileSync(path.join(ASSETS_DIR, `label-built-${theme}.svg`), buildLabel('things i’ve built & shipped', theme));
     fs.writeFileSync(path.join(ASSETS_DIR, `label-writings-${theme}.svg`), buildLabel('recent writings', theme));
     fs.writeFileSync(path.join(ASSETS_DIR, `label-socials-${theme}.svg`), buildLabel('✎ socials ➔', theme));

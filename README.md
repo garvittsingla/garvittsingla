@@ -39,6 +39,6 @@
 <br>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/wire-dark.svg">
-  <img alt="" src="assets/wire-light.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/wire-amber-dark.svg">
+  <img alt="" src="assets/wire-amber-light.svg" width="100%">
 </picture>
