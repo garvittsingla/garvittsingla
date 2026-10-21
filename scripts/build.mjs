@@ -22,7 +22,7 @@ const projectLines = data.projects.map((p) => {
   return `- **[${p.name}](${mainLink})**: ${p.description}${linkStr}`;
 }).join('\n');
 
-// Format Blogs
+// Format Blogs (titles only, no descriptions)
 const blogLines = data.recentBlogs.map((b) => {
   return `- [${b.title}](${b.url})`;
 }).join('\n');
@@ -32,60 +32,14 @@ const socialLinks = data.socials.map((s) => {
   return `[${s.name}](${s.url})`;
 }).join(' &nbsp;·&nbsp; ');
 
-function renderHeroOption(optNum, label) {
-  let darkFile, lightFile;
-  if (optNum === 1) {
-    darkFile = 'assets/opt1-browser-dark.svg';
-    lightFile = 'assets/opt1-browser-light.svg';
-  } else if (optNum === 2) {
-    darkFile = 'assets/opt2-sketchbook-dark.svg';
-    lightFile = 'assets/opt2-sketchbook-light.svg';
-  } else {
-    darkFile = 'assets/opt3-minimal-dark.svg';
-    lightFile = 'assets/opt3-minimal-light.svg';
-  }
-
-  return `<a href="${data.portfolioUrl}" target="_blank" rel="noopener noreferrer">
+const heroSection = `<a href="${data.portfolioUrl}" target="_blank" rel="noopener noreferrer">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="${darkFile}">
-    <img alt="${label}" src="${lightFile}" width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
+    <img alt="Garvit Singla — Software Engineer & Builder" src="assets/hero-light.svg" width="100%">
   </picture>
 </a>`;
-}
 
-let heroMarkdown = '';
-
-if (data.heroStyle === 'tabs' || data.heroStyle === 'compare') {
-  heroMarkdown = `> [!TIP]
-> **Click any tab below to toggle between the 3 hero designs:**
-
-<details open>
-  <summary><b>Option 1: macOS / Arc Browser Frame (Active)</b></summary>
-  <br>
-
-${renderHeroOption(1, 'Option 1: macOS Browser Frame')}
-</details>
-
-<details>
-  <summary><b>Option 2: Studio Desk / Sketchbook Canvas</b></summary>
-  <br>
-
-${renderHeroOption(2, 'Option 2: Sketchbook Canvas')}
-</details>
-
-<details>
-  <summary><b>Option 3: Minimalist Developer Card</b></summary>
-  <br>
-
-${renderHeroOption(3, 'Option 3: Minimalist Developer Card')}
-</details>
-`;
-} else {
-  const chosen = Number(data.heroStyle) || 1;
-  heroMarkdown = renderHeroOption(chosen, `Hero Option ${chosen}`);
-}
-
-const readmeContent = `${heroMarkdown}
+const readmeContent = `${heroSection}
 
 ### things i recently did
 
