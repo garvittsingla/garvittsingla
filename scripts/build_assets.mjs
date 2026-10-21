@@ -87,7 +87,7 @@ const THEMES = {
   },
 };
 
-// ── 1. HERO SVG (Sleek 260px banner, no IST tag, improvised 2-line custom text) ───
+// ── 1. HERO SVG ────────────────────────────────────────────────────────
 function buildHero(themeName) {
   const t = THEMES[themeName];
   const isDark = themeName === 'dark';
@@ -138,39 +138,63 @@ function buildHero(themeName) {
     </pattern>
   `;
 
-  // Bio line text paths using SpaceMono
-  const bioY1 = 182;
-  const bioY2 = 216;
-  const fontSize = 14.5;
+  // Tagline Lines using SpaceMono
+  const bioY1 = 180;
+  const bioY2 = 214;
+  const fontSize = 13.5;
 
-  // Line 1: Engineer focused on Rust, C/C++, Linux, and graphics.
-  const bioLine1_a = monoToPath('Engineer focused on ', startX, bioY1, fontSize);
-  const bioLine1_b = monoToPath('Rust', startX + bioLine1_a.width, bioY1, fontSize);
-  const bioLine1_c = monoToPath(', ', startX + bioLine1_a.width + bioLine1_b.width, bioY1, fontSize);
-  const bioLine1_d = monoToPath('C/C++', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width, bioY1, fontSize);
-  const bioLine1_e = monoToPath(', ', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width, bioY1, fontSize);
-  const bioLine1_f = monoToPath('Linux', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width + bioLine1_e.width, bioY1, fontSize);
-  const bioLine1_g = monoToPath(', and ', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width + bioLine1_e.width + bioLine1_f.width, bioY1, fontSize);
-  const bioLine1_h = monoToPath('graphics', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width + bioLine1_e.width + bioLine1_f.width + bioLine1_g.width, bioY1, fontSize);
-  const bioLine1_i = monoToPath('.', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width + bioLine1_e.width + bioLine1_f.width + bioLine1_g.width + bioLine1_h.width, bioY1, fontSize);
+  // Line 1: I like understanding how things work [under the hood].
+  const l1_a = monoToPath('I like understanding how things work ', startX, bioY1, fontSize);
+  const l1_b_x = startX + l1_a.width;
+  const l1_b = monoToPath('under the hood', l1_b_x, bioY1, fontSize);
+  const l1_c_x = l1_b_x + l1_b.width;
+  const l1_c = monoToPath('.', l1_c_x, bioY1, fontSize);
 
-  const l1_b_x = startX + bioLine1_a.width;
-  const l1_d_x = l1_b_x + bioLine1_b.width + bioLine1_c.width;
-  const l1_f_x = l1_d_x + bioLine1_d.width + bioLine1_e.width;
-  const l1_h_x = l1_f_x + bioLine1_f.width + bioLine1_g.width;
+  // Line 2: Building across the stack, from [systems programming] in [C++] and [Rust] to [web development], [graphics], and [DevOps].
+  let curX = startX;
+  const l2_a = monoToPath('Building across the stack, from ', curX, bioY2, fontSize);
+  curX += l2_a.width;
 
-  // Line 2: Exploring network protocols, memory management, and web technologies.
-  const bioLine2_a = monoToPath('Exploring ', startX, bioY2, fontSize);
-  const bioLine2_b = monoToPath('network protocols', startX + bioLine2_a.width, bioY2, fontSize);
-  const bioLine2_c = monoToPath(', ', startX + bioLine2_a.width + bioLine2_b.width, bioY2, fontSize);
-  const bioLine2_d = monoToPath('memory management', startX + bioLine2_a.width + bioLine2_b.width + bioLine2_c.width, bioY2, fontSize);
-  const bioLine2_e = monoToPath(', and ', startX + bioLine2_a.width + bioLine2_b.width + bioLine2_c.width + bioLine2_d.width, bioY2, fontSize);
-  const bioLine2_f = monoToPath('web technologies', startX + bioLine2_a.width + bioLine2_b.width + bioLine2_c.width + bioLine2_d.width + bioLine2_e.width, bioY2, fontSize);
-  const bioLine2_g = monoToPath('.', startX + bioLine2_a.width + bioLine2_b.width + bioLine2_c.width + bioLine2_d.width + bioLine2_e.width + bioLine2_f.width, bioY2, fontSize);
+  const l2_hl1_x = curX;
+  const l2_b = monoToPath('systems programming', curX, bioY2, fontSize);
+  curX += l2_b.width;
 
-  const l2_b_x = startX + bioLine2_a.width;
-  const l2_d_x = l2_b_x + bioLine2_b.width + bioLine2_c.width;
-  const l2_f_x = l2_d_x + bioLine2_d.width + bioLine2_e.width;
+  const l2_c = monoToPath(' in ', curX, bioY2, fontSize);
+  curX += l2_c.width;
+
+  const l2_hl2_x = curX;
+  const l2_d = monoToPath('C++', curX, bioY2, fontSize);
+  curX += l2_d.width;
+
+  const l2_e = monoToPath(' and ', curX, bioY2, fontSize);
+  curX += l2_e.width;
+
+  const l2_hl3_x = curX;
+  const l2_f = monoToPath('Rust', curX, bioY2, fontSize);
+  curX += l2_f.width;
+
+  const l2_g = monoToPath(' to ', curX, bioY2, fontSize);
+  curX += l2_g.width;
+
+  const l2_hl4_x = curX;
+  const l2_h = monoToPath('web development', curX, bioY2, fontSize);
+  curX += l2_h.width;
+
+  const l2_i = monoToPath(', ', curX, bioY2, fontSize);
+  curX += l2_i.width;
+
+  const l2_hl5_x = curX;
+  const l2_j = monoToPath('graphics', curX, bioY2, fontSize);
+  curX += l2_j.width;
+
+  const l2_k = monoToPath(', and ', curX, bioY2, fontSize);
+  curX += l2_k.width;
+
+  const l2_hl6_x = curX;
+  const l2_l = monoToPath('DevOps', curX, bioY2, fontSize);
+  curX += l2_l.width;
+
+  const l2_m = monoToPath('.', curX, bioY2, fontSize);
 
   return `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 ${H}" width="1200" height="${H}" role="img" aria-label="Garvit Singla — Software Engineer">
@@ -271,38 +295,37 @@ function buildHero(themeName) {
       <path class="anim-squiggle" d="${squigglePath}" fill="none" stroke="${t.accentAmber}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     </g>
 
-    <!-- 3. Bio Paragraph with highlighter pill boxes (2 lines only) -->
+    <!-- 3. Custom Tagline Lines with highlighters -->
     <g class="fade-up d-2">
-      <!-- Line 1 Highlighters -->
-      <rect x="${l1_b_x - 3}" y="${bioY1 - 15}" width="${bioLine1_b.width + 6}" height="20" rx="4" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="0.8" />
-      <rect x="${l1_d_x - 3}" y="${bioY1 - 15}" width="${bioLine1_d.width + 6}" height="20" rx="4" fill="${t.highlightBg2}" stroke="${t.highlightBorder2}" stroke-width="0.8" />
-      <rect x="${l1_f_x - 3}" y="${bioY1 - 15}" width="${bioLine1_f.width + 6}" height="20" rx="4" fill="${t.highlightBg3}" stroke="${t.highlightBorder3}" stroke-width="0.8" />
-      <rect x="${l1_h_x - 3}" y="${bioY1 - 15}" width="${bioLine1_h.width + 6}" height="20" rx="4" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="0.8" />
-
+      <!-- Line 1 Highlighter -->
+      <rect x="${l1_b_x - 3}" y="${bioY1 - 14}" width="${l1_b.width + 6}" height="19" rx="4" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="0.8" />
       <!-- Line 1 Text -->
-      <path d="${bioLine1_a.pathData}" fill="${t.textSecondary}" />
-      <path d="${bioLine1_b.pathData}" fill="${t.highlightText1}" />
-      <path d="${bioLine1_c.pathData}" fill="${t.textSecondary}" />
-      <path d="${bioLine1_d.pathData}" fill="${t.highlightText2}" />
-      <path d="${bioLine1_e.pathData}" fill="${t.textSecondary}" />
-      <path d="${bioLine1_f.pathData}" fill="${t.highlightText3}" />
-      <path d="${bioLine1_g.pathData}" fill="${t.textSecondary}" />
-      <path d="${bioLine1_h.pathData}" fill="${t.highlightText1}" />
-      <path d="${bioLine1_i.pathData}" fill="${t.textSecondary}" />
+      <path d="${l1_a.pathData}" fill="${t.textSecondary}" />
+      <path d="${l1_b.pathData}" fill="${t.highlightText1}" />
+      <path d="${l1_c.pathData}" fill="${t.textSecondary}" />
 
       <!-- Line 2 Highlighters -->
-      <rect x="${l2_b_x - 3}" y="${bioY2 - 15}" width="${bioLine2_b.width + 6}" height="20" rx="4" fill="${t.highlightBg2}" stroke="${t.highlightBorder2}" stroke-width="0.8" />
-      <rect x="${l2_d_x - 3}" y="${bioY2 - 15}" width="${bioLine2_d.width + 6}" height="20" rx="4" fill="${t.highlightBg3}" stroke="${t.highlightBorder3}" stroke-width="0.8" />
-      <rect x="${l2_f_x - 3}" y="${bioY2 - 15}" width="${bioLine2_f.width + 6}" height="20" rx="4" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="0.8" />
+      <rect x="${l2_hl1_x - 3}" y="${bioY2 - 14}" width="${l2_b.width + 6}" height="19" rx="4" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="0.8" />
+      <rect x="${l2_hl2_x - 3}" y="${bioY2 - 14}" width="${l2_d.width + 6}" height="19" rx="4" fill="${t.highlightBg2}" stroke="${t.highlightBorder2}" stroke-width="0.8" />
+      <rect x="${l2_hl3_x - 3}" y="${bioY2 - 14}" width="${l2_f.width + 6}" height="19" rx="4" fill="${t.highlightBg3}" stroke="${t.highlightBorder3}" stroke-width="0.8" />
+      <rect x="${l2_hl4_x - 3}" y="${bioY2 - 14}" width="${l2_h.width + 6}" height="19" rx="4" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="0.8" />
+      <rect x="${l2_hl5_x - 3}" y="${bioY2 - 14}" width="${l2_j.width + 6}" height="19" rx="4" fill="${t.highlightBg2}" stroke="${t.highlightBorder2}" stroke-width="0.8" />
+      <rect x="${l2_hl6_x - 3}" y="${bioY2 - 14}" width="${l2_l.width + 6}" height="19" rx="4" fill="${t.highlightBg3}" stroke="${t.highlightBorder3}" stroke-width="0.8" />
 
       <!-- Line 2 Text -->
-      <path d="${bioLine2_a.pathData}" fill="${t.textSecondary}" />
-      <path d="${bioLine2_b.pathData}" fill="${t.highlightText2}" />
-      <path d="${bioLine2_c.pathData}" fill="${t.textSecondary}" />
-      <path d="${bioLine2_d.pathData}" fill="${t.highlightText3}" />
-      <path d="${bioLine2_e.pathData}" fill="${t.textSecondary}" />
-      <path d="${bioLine2_f.pathData}" fill="${t.highlightText1}" />
-      <path d="${bioLine2_g.pathData}" fill="${t.textSecondary}" />
+      <path d="${l2_a.pathData}" fill="${t.textSecondary}" />
+      <path d="${l2_b.pathData}" fill="${t.highlightText1}" />
+      <path d="${l2_c.pathData}" fill="${t.textSecondary}" />
+      <path d="${l2_d.pathData}" fill="${t.highlightText2}" />
+      <path d="${l2_e.pathData}" fill="${t.textSecondary}" />
+      <path d="${l2_f.pathData}" fill="${t.highlightText3}" />
+      <path d="${l2_g.pathData}" fill="${t.textSecondary}" />
+      <path d="${l2_h.pathData}" fill="${t.highlightText1}" />
+      <path d="${l2_i.pathData}" fill="${t.textSecondary}" />
+      <path d="${l2_j.pathData}" fill="${t.highlightText2}" />
+      <path d="${l2_k.pathData}" fill="${t.textSecondary}" />
+      <path d="${l2_l.pathData}" fill="${t.highlightText3}" />
+      <path d="${l2_m.pathData}" fill="${t.textSecondary}" />
     </g>
   </g>
 
@@ -384,7 +407,7 @@ function main() {
   for (const theme of ['dark', 'light']) {
     const heroContent = buildHero(theme);
     fs.writeFileSync(path.join(ASSETS_DIR, `hero-${theme}.svg`), heroContent);
-    fs.writeFileSync(path.join(ASSETS_DIR, `hero-v2-${theme}.svg`), heroContent);
+    fs.writeFileSync(path.join(ASSETS_DIR, `hero-v3-${theme}.svg`), heroContent);
 
     const wireContent = buildWire(theme);
     fs.writeFileSync(path.join(ASSETS_DIR, `wire-${theme}.svg`), wireContent);
