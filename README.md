@@ -1,6 +1,6 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
-  <img alt="Garvit Singla — Software Engineer" src="assets/hero-light.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-v2-dark.svg">
+  <img alt="Garvit Singla — Software Engineer" src="assets/hero-v2-light.svg" width="100%">
 </picture>
 
 <br>

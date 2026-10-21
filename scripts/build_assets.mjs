@@ -53,14 +53,10 @@ function escapeXml(str) {
 const THEMES = {
   dark: {
     bg: '#090a0f',
-    cardBg: '#12131a',
     cardBorder: 'rgba(255, 255, 255, 0.12)',
     textPrimary: '#fafafa',
     textSecondary: '#cbd5e1',
-    textMuted: '#94a3b8',
     accentAmber: '#f59e0b',
-    accentCyan: '#38bdf8',
-    accentGreen: '#22c55e',
     gridColor: 'rgba(255, 255, 255, 0.05)',
     highlightBg1: 'rgba(245, 158, 11, 0.15)',
     highlightText1: '#fbbf24',
@@ -74,14 +70,10 @@ const THEMES = {
   },
   light: {
     bg: '#fdfbf7',
-    cardBg: '#faf7ee',
     cardBorder: '#e7e1d0',
     textPrimary: '#09090b',
     textSecondary: '#475569',
-    textMuted: '#71717a',
     accentAmber: '#b45309',
-    accentCyan: '#0284c7',
-    accentGreen: '#16a34a',
     gridColor: 'rgba(100, 70, 30, 0.05)',
     highlightBg1: 'rgba(245, 158, 11, 0.16)',
     highlightText1: '#92400e',
@@ -95,22 +87,20 @@ const THEMES = {
   },
 };
 
-// ── 1. HERO SVG ────────────────────────────────────────────────────────
+// ── 1. HERO SVG (Sleek 260px banner, no IST tag, improvised 2-line custom text) ───
 function buildHero(themeName) {
   const t = THEMES[themeName];
   const isDark = themeName === 'dark';
-  const startX = 90;
+  const startX = 80;
+  const H = 260;
 
-  // Text Paths
-  const heyPath = textToPath(fontGloria, 'hey i am', startX, 102, 23);
-  const namePath = textToPath(fontGloria, 'garvit singla', startX, 162, 50);
-  const engineerPath = textToPath(fontGloria, 'engineer', startX + 338, 162, 19);
+  // Title paths
+  const heyPath = textToPath(fontGloria, 'hey i am', startX, 68, 22);
+  const namePath = textToPath(fontGloria, 'garvit singla', startX, 126, 48);
+  const engineerPath = textToPath(fontGloria, 'engineer', startX + 322, 126, 18);
 
-  // Squiggle Underline (scaled to match name width ~308px)
-  const squigglePath = `M ${startX + 2} 175 C ${startX + 67} 168 ${startX + 162} 169 ${startX + 322} 173 C ${startX + 230} 177 ${startX + 81} 176 ${startX + 16} 177`;
-
-  // Status text (Chitkara / Open Source Chandigarh removed)
-  const statusPillText = monoToPath('IST (UTC+5:30)', startX + 30, 57, 11);
+  // Squiggle Underline under garvit singla
+  const squigglePath = `M ${startX + 2} 138 C ${startX + 67} 131 ${startX + 162} 132 ${startX + 305} 136 C ${startX + 215} 140 ${startX + 75} 139 ${startX + 15} 140`;
 
   // Ambient gradient blobs
   const ambientDef = isDark
@@ -125,8 +115,8 @@ function buildHero(themeName) {
         <stop offset="70%" stop-color="#38bdf8" stop-opacity="0.02" />
         <stop offset="100%" stop-color="#090a0f" stop-opacity="0" />
       </radialGradient>
-      <radialGradient id="orb3" cx="20%" cy="30%" r="45%">
-        <stop offset="0%" stop-color="#818cf8" stop-opacity="0.10" />
+      <radialGradient id="orb3" cx="15%" cy="30%" r="40%">
+        <stop offset="0%" stop-color="#818cf8" stop-opacity="0.08" />
         <stop offset="100%" stop-color="#090a0f" stop-opacity="0" />
       </radialGradient>
     `
@@ -135,7 +125,7 @@ function buildHero(themeName) {
         <stop offset="0%" stop-color="#fef3c7" stop-opacity="0.6" />
         <stop offset="100%" stop-color="#fdfbf7" stop-opacity="0" />
       </radialGradient>
-      <radialGradient id="orb2" cx="20%" cy="80%" r="50%">
+      <radialGradient id="orb2" cx="15%" cy="80%" r="50%">
         <stop offset="0%" stop-color="#e0f2fe" stop-opacity="0.4" />
         <stop offset="100%" stop-color="#fdfbf7" stop-opacity="0" />
       </radialGradient>
@@ -149,18 +139,17 @@ function buildHero(themeName) {
   `;
 
   // Bio line text paths using SpaceMono
-  const bioY1 = 218;
-  const bioY2 = 252;
-  const bioY3 = 286;
-  const fontSize = 14;
+  const bioY1 = 182;
+  const bioY2 = 216;
+  const fontSize = 14.5;
 
-  // Line 1
-  const bioLine1_a = monoToPath('Software engineer obsessed with ', startX, bioY1, fontSize);
-  const bioLine1_b = monoToPath('low-level systems', startX + bioLine1_a.width, bioY1, fontSize);
+  // Line 1: Engineer focused on Rust, C/C++, Linux, and graphics.
+  const bioLine1_a = monoToPath('Engineer focused on ', startX, bioY1, fontSize);
+  const bioLine1_b = monoToPath('Rust', startX + bioLine1_a.width, bioY1, fontSize);
   const bioLine1_c = monoToPath(', ', startX + bioLine1_a.width + bioLine1_b.width, bioY1, fontSize);
   const bioLine1_d = monoToPath('C/C++', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width, bioY1, fontSize);
   const bioLine1_e = monoToPath(', ', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width, bioY1, fontSize);
-  const bioLine1_f = monoToPath('Rust', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width + bioLine1_e.width, bioY1, fontSize);
+  const bioLine1_f = monoToPath('Linux', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width + bioLine1_e.width, bioY1, fontSize);
   const bioLine1_g = monoToPath(', and ', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width + bioLine1_e.width + bioLine1_f.width, bioY1, fontSize);
   const bioLine1_h = monoToPath('graphics', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width + bioLine1_e.width + bioLine1_f.width + bioLine1_g.width, bioY1, fontSize);
   const bioLine1_i = monoToPath('.', startX + bioLine1_a.width + bioLine1_b.width + bioLine1_c.width + bioLine1_d.width + bioLine1_e.width + bioLine1_f.width + bioLine1_g.width + bioLine1_h.width, bioY1, fontSize);
@@ -170,43 +159,31 @@ function buildHero(themeName) {
   const l1_f_x = l1_d_x + bioLine1_d.width + bioLine1_e.width;
   const l1_h_x = l1_f_x + bioLine1_f.width + bioLine1_g.width;
 
-  // Line 2
-  const bioLine2_a = monoToPath('Exploring foundational computing from ', startX, bioY2, fontSize);
+  // Line 2: Exploring network protocols, memory management, and web technologies.
+  const bioLine2_a = monoToPath('Exploring ', startX, bioY2, fontSize);
   const bioLine2_b = monoToPath('network protocols', startX + bioLine2_a.width, bioY2, fontSize);
-  const bioLine2_c = monoToPath(' to ', startX + bioLine2_a.width + bioLine2_b.width, bioY2, fontSize);
+  const bioLine2_c = monoToPath(', ', startX + bioLine2_a.width + bioLine2_b.width, bioY2, fontSize);
   const bioLine2_d = monoToPath('memory management', startX + bioLine2_a.width + bioLine2_b.width + bioLine2_c.width, bioY2, fontSize);
-  const bioLine2_e = monoToPath('.', startX + bioLine2_a.width + bioLine2_b.width + bioLine2_c.width + bioLine2_d.width, bioY2, fontSize);
+  const bioLine2_e = monoToPath(', and ', startX + bioLine2_a.width + bioLine2_b.width + bioLine2_c.width + bioLine2_d.width, bioY2, fontSize);
+  const bioLine2_f = monoToPath('web technologies', startX + bioLine2_a.width + bioLine2_b.width + bioLine2_c.width + bioLine2_d.width + bioLine2_e.width, bioY2, fontSize);
+  const bioLine2_g = monoToPath('.', startX + bioLine2_a.width + bioLine2_b.width + bioLine2_c.width + bioLine2_d.width + bioLine2_e.width + bioLine2_f.width, bioY2, fontSize);
 
   const l2_b_x = startX + bioLine2_a.width;
   const l2_d_x = l2_b_x + bioLine2_b.width + bioLine2_c.width;
-
-  // Line 3
-  const bioLine3_a = monoToPath('Building performant tools and understanding computers ', startX, bioY3, fontSize);
-  const bioLine3_b = monoToPath('from the metal up', startX + bioLine3_a.width, bioY3, fontSize);
-  const bioLine3_c = monoToPath('.', startX + bioLine3_a.width + bioLine3_b.width, bioY3, fontSize);
-
-  const l3_b_x = startX + bioLine3_a.width;
+  const l2_f_x = l2_d_x + bioLine2_d.width + bioLine2_e.width;
 
   return `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 330" width="1200" height="330" role="img" aria-label="Garvit Singla — Software Engineer">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 ${H}" width="1200" height="${H}" role="img" aria-label="Garvit Singla — Software Engineer">
   <title>Garvit Singla — Software Engineer</title>
   <defs>
     <clipPath id="cardClip">
-      <rect x="0" y="0" width="1200" height="330" rx="20" />
+      <rect x="0" y="0" width="1200" height="${H}" rx="18" />
     </clipPath>
     ${ambientDef}
     ${gridDef}
   </defs>
 
   <style>
-    .pulse-dot {
-      animation: pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(1.15); }
-    }
-
     .ambient-drift-1 {
       animation: drift1 28s ease-in-out infinite alternate;
     }
@@ -248,7 +225,6 @@ function buildHero(themeName) {
     }
     .d-1 { animation-delay: 0.1s; }
     .d-2 { animation-delay: 0.3s; }
-    .d-3 { animation-delay: 0.5s; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(8px); }
@@ -256,7 +232,7 @@ function buildHero(themeName) {
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, .anim-name, .anim-squiggle, .pulse-dot, .ambient-drift-1, .ambient-drift-2, .fade-up {
+      *, .anim-name, .anim-squiggle, .ambient-drift-1, .ambient-drift-2, .fade-up {
         animation: none !important;
         stroke-dashoffset: 0 !important;
         opacity: 1 !important;
@@ -266,36 +242,28 @@ function buildHero(themeName) {
 
   <!-- Card Background -->
   <g clip-path="url(#cardClip)">
-    <rect width="1200" height="330" fill="${t.bg}" />
+    <rect width="1200" height="${H}" fill="${t.bg}" />
     
     <!-- Ambient glowing orbs on right -->
-    <circle class="ambient-drift-1" cx="1050" cy="80" r="300" fill="url(#orb1)" />
-    <circle class="ambient-drift-2" cx="900" cy="260" r="260" fill="url(#orb2)" />
-    ${isDark ? '<circle class="ambient-drift-1" cx="200" cy="60" r="220" fill="url(#orb3)" />' : ''}
+    <circle class="ambient-drift-1" cx="1050" cy="70" r="280" fill="url(#orb1)" />
+    <circle class="ambient-drift-2" cx="900" cy="210" r="240" fill="url(#orb2)" />
+    ${isDark ? '<circle class="ambient-drift-1" cx="160" cy="50" r="180" fill="url(#orb3)" />' : ''}
     
     <!-- Grid Overlay -->
-    <rect width="1200" height="330" fill="url(#grid)" opacity="0.8" />
+    <rect width="1200" height="${H}" fill="url(#grid)" opacity="0.8" />
 
-    <!-- 1. Telemetry / Live Status Pill -->
+    <!-- 1. "hey i am" in Gloria Hallelujah -->
     <g class="fade-up d-1">
-      <rect x="${startX}" y="38" width="155" height="28" rx="14" fill="${t.cardBg}" stroke="${t.cardBorder}" stroke-width="1.2" />
-      <circle cx="${startX + 15}" cy="52" r="4" fill="${t.accentGreen}" class="pulse-dot" />
-      <circle cx="${startX + 15}" cy="52" r="7.5" fill="${t.accentGreen}" opacity="0.25" class="pulse-dot" />
-      <path d="${statusPillText.pathData}" fill="${t.textMuted}" />
-    </g>
-
-    <!-- 2. "hey i am" in Gloria Hallelujah -->
-    <g class="fade-up d-2">
       <path d="${heyPath}" fill="${t.accentAmber}" />
     </g>
 
-    <!-- 3. "garvit singla" Animated Signature & Underline -->
+    <!-- 2. "garvit singla" Animated Signature & Underline -->
     <g>
       <path class="anim-name" d="${namePath}" fill="${t.textPrimary}" stroke="${t.textPrimary}" stroke-width="1.4" />
       
       <!-- Role tag badge "engineer" -->
       <g transform="translate(0, 0)">
-        <rect x="${startX + 328}" y="142" width="92" height="26" rx="6" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="1" />
+        <rect x="${startX + 312}" y="106" width="90" height="26" rx="6" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="1" />
         <path d="${engineerPath}" fill="${t.highlightText1}" />
       </g>
 
@@ -303,8 +271,8 @@ function buildHero(themeName) {
       <path class="anim-squiggle" d="${squigglePath}" fill="none" stroke="${t.accentAmber}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     </g>
 
-    <!-- 4. Bio Paragraph with highlighter pill boxes -->
-    <g class="fade-up d-3">
+    <!-- 3. Bio Paragraph with highlighter pill boxes (2 lines only) -->
+    <g class="fade-up d-2">
       <!-- Line 1 Highlighters -->
       <rect x="${l1_b_x - 3}" y="${bioY1 - 15}" width="${bioLine1_b.width + 6}" height="20" rx="4" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="0.8" />
       <rect x="${l1_d_x - 3}" y="${bioY1 - 15}" width="${bioLine1_d.width + 6}" height="20" rx="4" fill="${t.highlightBg2}" stroke="${t.highlightBorder2}" stroke-width="0.8" />
@@ -325,6 +293,7 @@ function buildHero(themeName) {
       <!-- Line 2 Highlighters -->
       <rect x="${l2_b_x - 3}" y="${bioY2 - 15}" width="${bioLine2_b.width + 6}" height="20" rx="4" fill="${t.highlightBg2}" stroke="${t.highlightBorder2}" stroke-width="0.8" />
       <rect x="${l2_d_x - 3}" y="${bioY2 - 15}" width="${bioLine2_d.width + 6}" height="20" rx="4" fill="${t.highlightBg3}" stroke="${t.highlightBorder3}" stroke-width="0.8" />
+      <rect x="${l2_f_x - 3}" y="${bioY2 - 15}" width="${bioLine2_f.width + 6}" height="20" rx="4" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="0.8" />
 
       <!-- Line 2 Text -->
       <path d="${bioLine2_a.pathData}" fill="${t.textSecondary}" />
@@ -332,19 +301,13 @@ function buildHero(themeName) {
       <path d="${bioLine2_c.pathData}" fill="${t.textSecondary}" />
       <path d="${bioLine2_d.pathData}" fill="${t.highlightText3}" />
       <path d="${bioLine2_e.pathData}" fill="${t.textSecondary}" />
-
-      <!-- Line 3 Highlighter -->
-      <rect x="${l3_b_x - 3}" y="${bioY3 - 15}" width="${bioLine3_b.width + 6}" height="20" rx="4" fill="${t.highlightBg1}" stroke="${t.highlightBorder1}" stroke-width="0.8" />
-
-      <!-- Line 3 Text -->
-      <path d="${bioLine3_a.pathData}" fill="${t.textSecondary}" />
-      <path d="${bioLine3_b.pathData}" fill="${t.highlightText1}" />
-      <path d="${bioLine3_c.pathData}" fill="${t.textSecondary}" />
+      <path d="${bioLine2_f.pathData}" fill="${t.highlightText1}" />
+      <path d="${bioLine2_g.pathData}" fill="${t.textSecondary}" />
     </g>
   </g>
 
   <!-- Card Border -->
-  <rect x="0.75" y="0.75" width="1198.5" height="328.5" rx="19.25" fill="none" stroke="${t.cardBorder}" stroke-width="1.5" />
+  <rect x="0.75" y="0.75" width="1198.5" height="${H - 1.5}" rx="17.25" fill="none" stroke="${t.cardBorder}" stroke-width="1.5" />
 </svg>
   `.trim();
 }
@@ -416,23 +379,24 @@ function buildLabel(text, themeName) {
 
 // ── BUILD ALL ASSETS ───────────────────────────────────────────────────
 function main() {
-  console.log('Generating updated assets for garvittsingla/garvittsingla...');
+  console.log('Generating updated hero & assets for garvittsingla/garvittsingla...');
 
   for (const theme of ['dark', 'light']) {
-    fs.writeFileSync(path.join(ASSETS_DIR, `hero-${theme}.svg`), buildHero(theme));
-    fs.writeFileSync(path.join(ASSETS_DIR, `wire-${theme}.svg`), buildWire(theme));
-    fs.writeFileSync(path.join(ASSETS_DIR, `wire-amber-${theme}.svg`), buildWire(theme));
+    const heroContent = buildHero(theme);
+    fs.writeFileSync(path.join(ASSETS_DIR, `hero-${theme}.svg`), heroContent);
+    fs.writeFileSync(path.join(ASSETS_DIR, `hero-v2-${theme}.svg`), heroContent);
+
+    const wireContent = buildWire(theme);
+    fs.writeFileSync(path.join(ASSETS_DIR, `wire-${theme}.svg`), wireContent);
+    fs.writeFileSync(path.join(ASSETS_DIR, `wire-amber-${theme}.svg`), wireContent);
+
     fs.writeFileSync(path.join(ASSETS_DIR, `label-built-${theme}.svg`), buildLabel('things i’ve built & shipped', theme));
     fs.writeFileSync(path.join(ASSETS_DIR, `label-writings-${theme}.svg`), buildLabel('recent writings', theme));
     fs.writeFileSync(path.join(ASSETS_DIR, `label-socials-${theme}.svg`), buildLabel('✎ socials ➔', theme));
   }
 
   const files = fs.readdirSync(ASSETS_DIR);
-  console.log(`Successfully generated ${files.length} assets in ${ASSETS_DIR}:`);
-  for (const file of files) {
-    const stats = fs.statSync(path.join(ASSETS_DIR, file));
-    console.log(`  - ${file} (${(stats.size / 1024).toFixed(1)} KB)`);
-  }
+  console.log(`Successfully generated ${files.length} assets in ${ASSETS_DIR}`);
 }
 
 main();
