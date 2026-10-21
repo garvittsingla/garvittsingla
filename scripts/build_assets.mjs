@@ -353,15 +353,17 @@ function buildHero(themeName) {
 function buildWire(themeName) {
   const t = THEMES[themeName];
   const isDark = themeName === 'dark';
-  const packetColor = isDark ? '#38bdf8' : '#b45309';
+  const packetColor = t.accentAmber;
+  const leadColor = isDark ? '#fef08a' : '#f59e0b';
+  const wireBase = isDark ? 'rgba(245, 158, 11, 0.20)' : 'rgba(180, 83, 9, 0.20)';
 
   return `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 24" width="1200" height="24" role="img" aria-label="Networking wire divider">
   <defs>
     <linearGradient id="packetGrad" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="${packetColor}" stop-opacity="0" />
-      <stop offset="70%" stop-color="${packetColor}" stop-opacity="0.85" />
-      <stop offset="100%" stop-color="${isDark ? '#ffffff' : packetColor}" stop-opacity="1" />
+      <stop offset="70%" stop-color="${packetColor}" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="${leadColor}" stop-opacity="1" />
     </linearGradient>
   </defs>
   <style>
@@ -385,9 +387,9 @@ function buildWire(themeName) {
   </style>
 
   <!-- Main Wire Rule -->
-  <line x1="0" y1="12" x2="1200" y2="12" stroke="${t.cardBorder}" stroke-width="1.2" />
+  <line x1="0" y1="12" x2="1200" y2="12" stroke="${wireBase}" stroke-width="1.2" />
 
-  <!-- Animated Data Packets -->
+  <!-- Animated Data Packets in Heading Amber Accent -->
   <rect class="packet p-1" x="-120" y="10" width="120" height="4" rx="2" fill="url(#packetGrad)" />
   <rect class="packet p-2" x="-120" y="10" width="80" height="4" rx="2" fill="url(#packetGrad)" />
   <rect class="packet p-3" x="-120" y="10" width="140" height="4" rx="2" fill="url(#packetGrad)" />
