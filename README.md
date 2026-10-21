@@ -26,8 +26,6 @@
 </h2>
 
 * [implementing nslookup](https://garvitsingla.in/blog/nslookup)
-* [Building a Custom HTTP Server from Scratch in C++](https://garvitsingla.in/blog/http-server-in-cpp)
-* [You suck at Subnetting](https://garvitsingla.in/blog/you-suck-at-subnetting)
 
 <h2>
   <picture>
