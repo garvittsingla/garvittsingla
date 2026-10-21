@@ -29,7 +29,7 @@
   <!-- Main Wire Rule -->
   <line x1="0" y1="12" x2="1200" y2="12" stroke="#e7e1d0" stroke-width="1.2" />
 
-  <!-- Animated Data Packets (RFC 1035 UDP / Sockets motif) -->
+  <!-- Animated Data Packets -->
   <rect class="packet p-1" x="-120" y="10" width="120" height="4" rx="2" fill="url(#packetGrad)" />
   <rect class="packet p-2" x="-120" y="10" width="80" height="4" rx="2" fill="url(#packetGrad)" />
   <rect class="packet p-3" x="-120" y="10" width="140" height="4" rx="2" fill="url(#packetGrad)" />

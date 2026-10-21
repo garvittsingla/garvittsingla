@@ -1,6 +1,6 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
-  <img alt="Garvit Singla — Software Engineer & Builder" src="assets/hero-light.svg" width="100%">
+  <img alt="Garvit Singla — Software Engineer" src="assets/hero-light.svg" width="100%">
 </picture>
 
 <br>
@@ -15,19 +15,19 @@
 
 * **[Gruber 🕊️](https://gruber.garvitsingla.in)**: Realtime Markdown-to-slides presentation engine. Built a custom lexer, tokenizer, and AST parser completely from scratch with zero dependencies in native JavaScript. · [launch live](https://gruber.garvitsingla.in) · [github](https://github.com/garvittsingla/gruber)
 * **[TypeRush 🪐](https://typerush.garvitsingla.in)**: Real-time multiplayer typing duel engine built with a custom WebSocket architecture. Features room-based matchmaking, synchronized race countdowns, live opponent cursor/progress tracking, and instant WPM analytics. · [launch live](https://typerush.garvitsingla.in) · [github](https://github.com/garvittsingla/typerush)
-* **[nslookup in C](https://github.com/garvittsingla/nslookup)**: Command-line DNS resolver written from scratch in C using the UNIX Sockets API. Crafts 512-byte RFC 1035 wire datagrams, connects to UDP port 53, parses 12-byte header bitfields, and unpacks recursive A/AAAA records. · [code & docs](https://github.com/garvittsingla/nslookup)
+* **[nslookup in C](https://github.com/garvittsingla/nslookup)**: Command-line DNS resolver written from scratch in C using the UNIX Sockets API. Crafts 512-byte RFC 1035 wire datagrams, connects to UDP port 53, parses 12-byte header bitfields, and unpacks recursive A/AAAA records. · [github](https://github.com/garvittsingla/nslookup)
 * **[http-server-cpp](https://github.com/garvittsingla/http-server-cpp)**: Lightweight multithreaded HTTP/1.1 server implementation from scratch in modern C++, supporting concurrent POSIX socket connections, request headers parsing, and static file streaming. · [github](https://github.com/garvittsingla/http-server-cpp)
 
 <h2>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/label-exp-dark.svg">
-    <img alt="places i’ve grown · experience" src="assets/label-exp-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/label-writings-dark.svg">
+    <img alt="recent writings" src="assets/label-writings-light.svg">
   </picture>
 </h2>
 
-* **Open Source Executive** @ [Open Source Chandigarh](https://github.com/garvittsingla) *(Oct 2025 — Present)*<br>
-  Leading open source initiatives at Chitkara University, maintaining community repositories, and mentoring contributors across hackathons and Hacktoberfest.
-* **Runner-Up (2nd Place)** @ Tech Abhivyakti 3.0 Hackathon *(Chitkara University)*
+* [implementing nslookup](https://garvitsingla.in/blog/nslookup)
+* [Building a Custom HTTP Server from Scratch in C++](https://garvitsingla.in/blog/http-server-in-cpp)
+* [You suck at Subnetting](https://garvitsingla.in/blog/you-suck-at-subnetting)
 
 <h2>
   <picture>
@@ -44,14 +44,3 @@
   <source media="(prefers-color-scheme: dark)" srcset="assets/wire-dark.svg">
   <img alt="" src="assets/wire-light.svg" width="100%">
 </picture>
-
-<p align="right">
-  <a href="https://garvitsingla.in" target="_blank" rel="noopener noreferrer">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="assets/signoff-dark.svg">
-      <img alt="built from the metal up · garvitsingla.in" src="assets/signoff-light.svg">
-    </picture>
-  </a>
-</p>
-
-<sub>this profile mirrors <a href="https://garvitsingla.in">garvitsingla.in</a>: vector-rendered paths, theme-adaptive svgs, and stroke-animated calligraphy. <a href="scripts">check the build script</a>.</sub>

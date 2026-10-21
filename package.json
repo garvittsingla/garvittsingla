@@ -1,10 +1,11 @@
 {
   "name": "garvittsingla",
   "version": "1.0.0",
-  "description": "GitHub Profile README for Garvit Singla (@garvittsingla), mirroring garvitsingla.in",
+  "description": "GitHub Profile README for Garvit Singla (@garvittsingla)",
   "type": "module",
   "scripts": {
-    "build": "node scripts/build_assets.mjs"
+    "build": "node scripts/build.mjs",
+    "build:assets": "node scripts/build_assets.mjs"
   },
   "repository": {
     "type": "git",
