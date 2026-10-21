@@ -1,0 +1,54 @@
+{
+  "screenshot": {
+    "dark": "assets/intro-dark.png",
+    "light": "assets/intro-light.png",
+    "fallback": "assets/intro.png",
+    "alt": "Garvit Singla — Software Engineer & Builder",
+    "portfolioUrl": "https://garvitsingla.in"
+  },
+  "projects": [
+    {
+      "name": "Gruber 🕊️",
+      "description": "Realtime Markdown to Slides Presentation Engine with a custom lexer, tokenizer, and parser written completely from scratch in native JavaScript.",
+      "live": "https://gruber.garvitsingla.in",
+      "github": "https://github.com/garvittsingla/gruber"
+    },
+    {
+      "name": "TypeRush 🪐",
+      "description": "Real-time multiplayer typing duel engine built with custom WebSockets, live opponent progress/cursor tracking, and synchronized countdowns.",
+      "live": "https://typerush.garvitsingla.in",
+      "github": "https://github.com/garvittsingla/typerush"
+    },
+    {
+      "name": "nslookup in C",
+      "description": "Custom DNS Resolver using UNIX Sockets API. Crafts 512-byte RFC 1035 wire datagrams, connects to UDP port 53, and unpacks recursive A/AAAA records.",
+      "github": "https://github.com/garvittsingla/nslookup"
+    },
+    {
+      "name": "http-server-cpp",
+      "description": "Lightweight multithreaded HTTP/1.1 server from scratch in modern C++ supporting concurrent connections, header parsing, and static file serving.",
+      "github": "https://github.com/garvittsingla/http-server-cpp"
+    }
+  ],
+  "recentBlogs": [
+    {
+      "title": "implementing nslookup",
+      "url": "https://garvitsingla.in/blog/nslookup"
+    },
+    {
+      "title": "Building a Custom HTTP Server from Scratch in C++",
+      "url": "https://garvitsingla.in/blog/http-server-in-cpp"
+    },
+    {
+      "title": "You suck at Subnetting",
+      "url": "https://garvitsingla.in/blog/you-suck-at-subnetting"
+    }
+  ],
+  "socials": [
+    { "name": "portfolio", "url": "https://garvitsingla.in" },
+    { "name": "github", "url": "https://github.com/garvittsingla" },
+    { "name": "linkedin", "url": "https://linkedin.com/in/garvittsingla" },
+    { "name": "x / twitter", "url": "https://twitter.com/garvitsinglaa" },
+    { "name": "email", "url": "mailto:garvitsingla4751@gmail.com" }
+  ]
+}

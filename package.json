@@ -1,10 +1,11 @@
 {
   "name": "garvittsingla",
   "version": "1.0.0",
-  "description": "GitHub Profile README for Garvit Singla (@garvittsingla), mirroring garvitsingla.in",
+  "description": "GitHub Profile README for Garvit Singla (@garvittsingla)",
   "type": "module",
   "scripts": {
-    "build": "node scripts/build_assets.mjs"
+    "build": "node scripts/build.mjs",
+    "capture": "node scripts/capture.mjs"
   },
   "repository": {
     "type": "git",
@@ -13,6 +14,6 @@
   "author": "Garvit Singla",
   "license": "MIT",
   "dependencies": {
-    "opentype.js": "^1.3.4"
+    "puppeteer-core": "^24.4.0"
   }
 }
