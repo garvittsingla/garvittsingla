@@ -1,4 +1,3 @@
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-v3-dark.svg">
   <img alt="Garvit Singla — Software Engineer" src="assets/hero-v3-light.svg" width="100%">
