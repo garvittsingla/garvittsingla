@@ -12,10 +12,10 @@
     <img alt="things i’ve built & shipped" src="assets/label-built-light.svg">
   </picture>
 </h2>
-
+* **[nslookup in C](https://github.com/garvittsingla/nslookup)**: Command-line DNS resolver written from scratch in C using the UNIX Sockets API. · [github](https://github.com/garvittsingla/nslookup)
+* **[ccp(Captative portal CLI)](https://github.com/garvittsingla/ccp)**: Automatic portal detection and login on basis of saved credentials. · [github](https://github.com/garvittsingla/ccp)
 * **[Gruber 🕊️](https://gruber.garvitsingla.in)**: Realtime Markdown-to-slides presentation engine. Built a custom lexer, tokenizer, and AST parser. · [launch live](https://gruber.garvitsingla.in) · [github](https://github.com/garvittsingla/gruber)
 * **[TypeRush 🪐](https://typerush.garvitsingla.in)**: Real-time multiplayer typing game with a WebSocket architecture. · [launch live](https://typerush.garvitsingla.in) · [github](https://github.com/garvittsingla/typerush)
-* **[nslookup in C](https://github.com/garvittsingla/nslookup)**: Command-line DNS resolver written from scratch in C using the UNIX Sockets API. · [github](https://github.com/garvittsingla/nslookup)
 * **[http-server-cpp](https://github.com/garvittsingla/http-server-cpp)**: Lightweight HTTP/1.1 server implementation from scratch in modern C++. · [github](https://github.com/garvittsingla/http-server-cpp)
 
 <h2>
